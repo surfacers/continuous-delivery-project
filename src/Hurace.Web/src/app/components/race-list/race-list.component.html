@@ -1,0 +1,39 @@
+<div [ngSwitch]="races.kind" class="flex-1 d-flex flex-col mw-400px shadow">
+    <ng-container *ngSwitchCase="'Data'">
+        <div class="d-flex flex-col px-2 pt-1">
+            <mat-form-field>
+                <input matInput placeholder="Search" [(ngModel)]="filter" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <app-icon-info icon="flag-outline" *ngIf="filteredRaces.length === 0">
+            no race found
+        </app-icon-info>
+
+        <mat-nav-list class="flex-1 mh-100 overflow-auto p-0">
+            <a mat-list-item *ngFor="let race of filteredRaces" routerLink="{{ race.id }}" routerLinkActive="active">
+                <div class="d-flex">
+                    <div class="pr-2 d-flex align-items-center">
+                        <span class="mdi-24px {{ getRaceStateIcon(race.raceState) }}"></span>
+                    </div>
+
+                    <div class="d-flex flex-col">
+                        <div class="text-bold">{{ race.name }}</div>
+                        <div class="text-smaller pt-2px">
+                            {{ race.raceDate | date:'dd.MM.yyyy' }}
+                            <span [class]="getGenderIcon(race.gender)"></span>
+                            {{ formatRaceType(race.raceType) }}
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </mat-nav-list>
+    </ng-container>
+
+    <app-loading *ngSwitchCase="'Loading'"></app-loading>
+    <app-error-info *ngSwitchCase="'Error'"></app-error-info>
+</div>
+
+<div class="flex-1 p-3 overflow-auto">
+    <router-outlet></router-outlet>
+</div>

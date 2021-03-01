@@ -1,0 +1,141 @@
+﻿<Window x:Class="Hurace.RaceControl.Views.Simulator.SimulatorSettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2004"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hurace.RaceControl.Views.Simulator"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:controls="clr-namespace:Hurace.RaceControl.Views.Controls"
+        xmlns:dragablz="http://dragablz.net/winfx/xaml/dragablz"
+        xmlns:mvvmControls="clr-namespace:Hurace.Mvvm.Views.Controls;assembly=Hurace.Mvvm"
+        mc:Ignorable="d"
+        Title="SimulatorSettingsView" Height="550" Width="500" Background="{DynamicResource MaterialDesignPaper}">
+    <Window.Resources>
+        <Style x:Key="Label" TargetType="{x:Type TextBlock}">
+            <Setter Property="Margin" Value="4 8"></Setter>
+            <Setter Property="VerticalAlignment" Value="Bottom"></Setter>
+            <Setter Property="FontWeight" Value="Bold"></Setter>
+        </Style>
+
+        <Style TargetType="TextBox" BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}">
+            <Setter Property="Margin" Value="4 10"></Setter>
+            <Setter Property="IsEnabled" Value="{Binding IsEnabled}"></Setter>
+            <Setter Property="MinWidth" Value="150"></Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <dragablz:TabablzControl FixedHeaderCount="100" 
+                             BorderThickness="0">
+            <TabItem Header="Settings">
+                <ScrollViewer>
+                    <Grid Margin="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                            <RowDefinition Height="Auto"></RowDefinition>
+                        </Grid.RowDefinitions>
+
+                        <!-- Interval-->
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="Interval (in ms)" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Min interval"
+                                     Text="{Binding Edit.MinInterval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="-" VerticalAlignment="Bottom" Margin="4 12"></TextBlock>
+                            <TextBox materialDesign:HintAssist.Hint="Max interval"
+                                     Text="{Binding Edit.MaxInterval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </StackPanel>
+
+                        <!-- Real Time -->
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Real Interval (in ms)" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Min real time"
+                                     Text="{Binding Edit.MinRealInterval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="-" VerticalAlignment="Bottom" Margin="4 12"></TextBlock>
+                            <TextBox materialDesign:HintAssist.Hint="Max real time"
+                                     Text="{Binding Edit.MaxRealInterval, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </StackPanel>
+
+                        <!-- Sensor Amount -->
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Sensor Amount" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="2" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Sensor Amount"
+                                     Text="{Binding Edit.SensorAmount, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                        </StackPanel>
+
+                        <!-- TriggerSuccessWeight -->
+                        <TextBlock Grid.Row="3" Grid.Column="0" Text="Erfolgreich auslösen" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Weight"
+                                     Text="{Binding Edit.TriggerSuccessWeight, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="%" VerticalAlignment="Bottom" FontSize="10" Margin="4 12"></TextBlock>
+                        </StackPanel>
+
+                        <!-- NotTriggerWeight -->
+                        <TextBlock Grid.Row="4" Grid.Column="0" Text="Nicht auslösen" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Weight"
+                                     Text="{Binding Edit.DoNotTriggerWeight, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="%" VerticalAlignment="Bottom" FontSize="10" Margin="4 12"></TextBlock>
+                        </StackPanel>
+
+                        <!-- SetWrongDeltaTimeWeight -->
+                        <TextBlock Grid.Row="5" Grid.Column="0" Text="Falsche Delta Zeit" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Weight"
+                                    Text="{Binding Edit.SetWrongDeltaTimeWeight, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="%" VerticalAlignment="Bottom" FontSize="10" Margin="4 12"></TextBlock>
+                        </StackPanel>
+
+                        <!-- SetWrongSensorIdWeight -->
+                        <TextBlock Grid.Row="6" Grid.Column="0" Text="Falsche Sensor Id" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="6" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Weight"
+                                     Text="{Binding Edit.SetWrongSensorIdWeight, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="%" VerticalAlignment="Bottom" FontSize="10" Margin="4 12"></TextBlock>
+                        </StackPanel>
+
+                        <!-- TriggerMultipleWeight -->
+                        <TextBlock Grid.Row="7" Grid.Column="0" Text="Mehrfachauslösung" Style="{StaticResource Label}"></TextBlock>
+
+                        <StackPanel Grid.Row="7" Grid.Column="1" Orientation="Horizontal">
+                            <TextBox materialDesign:HintAssist.Hint="Weight"
+                                     Text="{Binding Edit.TriggerMultipleWeight, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                            <TextBlock Text="%" VerticalAlignment="Bottom" FontSize="10" Margin="4 12"></TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </ScrollViewer>
+            </TabItem>
+
+            <TabItem Header="Logs">
+                <ListView ItemsSource="{Binding Logs}" Style="{StaticResource EmptyListStyle}"></ListView>
+            </TabItem>
+        </dragablz:TabablzControl>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="8">
+            <mvvmControls:CommandControl DataContext="{Binding StopCommandViewModel}"/>
+            <mvvmControls:CommandControl Margin="4 0 0 0" DataContext="{Binding StartCommandViewModel}"/>
+        </StackPanel>
+    </Grid>
+</Window>

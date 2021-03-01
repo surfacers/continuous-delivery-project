@@ -1,0 +1,50 @@
+<h1>{{ skier == null ? 'New Skier' : 'Edit Skier' }}</h1>
+
+<form class="d-flex flex-col" [formGroup]="skierForm" novalidate>
+    <div class="d-flex">
+        <mat-form-field class="flex-1 mr-2">
+            <input matInput placeholder="First Name" formControlName="firstName" autocomplete="off">
+            <mat-error *ngIf="hasError('firstName')">{{ getErrorMessage('firstName') }}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="flex-1 ml-2">
+            <input matInput placeholder="Last Name" formControlName="lastName" autocomplete="off">
+            <mat-error *ngIf="hasError('lastName')">{{ getErrorMessage('lastName') }}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <mat-radio-group aria-label="Gender" formControlName="gender">
+        <mat-radio-button [value]="0" class="mr-4">Male</mat-radio-button>
+        <mat-radio-button [value]="1">Female</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field>
+        <mat-select placeholder="Country" formControlName="countryCode">
+            <mat-option *ngFor="let country of countryCodes$ | async" [value]="country">{{country}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="hasError('countryCode')">{{ getErrorMessage('countryCode') }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput [matDatepicker]="picker" placeholder="Birth Date" formControlName="birthDate"
+            autocomplete="off">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="hasError('birthDate')">{{ getErrorMessage('birthDate') }}</mat-error>
+    </mat-form-field>
+
+    <mat-checkbox formControlName="isActive">Has active career</mat-checkbox>
+
+    <mat-form-field>
+        <input matInput placeholder="Image URL" formControlName="image" autocomplete="off">
+        <mat-error *ngIf="hasError('image')">{{ getErrorMessage('image') }}</mat-error>
+    </mat-form-field>
+
+    <img *ngIf="skierForm.get('image').value" class="skier-image rounded align-center"
+        [src]="skierForm.get('image').value" alt="Skier Image" />
+
+    <div class="d-flex justify-content-end p-2" *ngIf="auth.loggedIn">
+        <button mat-button color="primary" class="mr-2" (click)="remove()">Remove</button>
+        <button mat-raised-button color="primary" (click)="save()">Save</button>
+    </div>
+</form>

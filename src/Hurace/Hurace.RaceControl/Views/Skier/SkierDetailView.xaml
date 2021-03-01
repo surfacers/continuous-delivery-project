@@ -1,0 +1,106 @@
+﻿<UserControl x:Class="Hurace.RaceControl.Views.Skier.SkierDetailView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Hurace.RaceControl.Views.Skier"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controls="clr-namespace:Hurace.RaceControl.Views.Controls"
+             xmlns:mvvmControls="clr-namespace:Hurace.Mvvm.Views.Controls;assembly=Hurace.Mvvm"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <StackPanel Grid.Row="0" MaxWidth="500">
+                <TextBlock Margin="8 16"
+                           Text="{Binding Parent.Edit.DisplayName}"
+                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0" Margin="8"
+                             materialDesign:HintAssist.Hint="First Name"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Text="{Binding Parent.Edit.FirstName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+
+                    <TextBox Grid.Column="1" Margin="8"
+                             materialDesign:HintAssist.Hint="Last Name"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Text="{Binding Parent.Edit.LastName, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                </Grid>
+
+                <StackPanel Orientation="Horizontal" Margin="0 10 0 0">
+                    <RadioButton Margin="8" Content="Male"
+                                 Style="{StaticResource MaterialDesignRadioButton}"
+                                 IsChecked="{Binding Path=Parent.Edit.Gender, Mode=TwoWay, 
+                                              Converter={StaticResource EnumToBoolConverter},
+                                              ConverterParameter=Male}">
+                    </RadioButton>
+
+                    <RadioButton Margin="8" Content="Female"
+                                 Style="{StaticResource MaterialDesignRadioButton}"
+                                 IsChecked="{Binding Path=Parent.Edit.Gender, Mode=TwoWay, 
+                                              Converter={StaticResource EnumToBoolConverter},
+                                              ConverterParameter=Female}">
+                    </RadioButton>
+                </StackPanel>
+
+                <StackPanel Margin="0 8 0 0">
+                    <ComboBox Margin="8"
+                              ItemsSource="{Binding CountryCodes}"
+                              SelectedItem="{Binding Parent.Edit.CountryCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                              materialDesign:HintAssist.Hint="Country"
+                              Style="{StaticResource MaterialDesignFloatingHintComboBox}"
+                              IsEditable="True">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding}"></TextBlock>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </StackPanel>
+
+                <StackPanel Margin="0 8 0 0">
+                    <DatePicker Margin="8"
+                                SelectedDate="{Binding Parent.Edit.BirthDate, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
+                                materialDesign:HintAssist.Hint="Birth Date"
+                                Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                </StackPanel>
+
+                <StackPanel Margin="0 10 0 0">
+                    <CheckBox Margin="8" Style="{StaticResource MaterialDesignCheckBox}"
+                              IsChecked="{Binding Parent.Edit.IsActive, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}">
+                        Has active career
+                    </CheckBox>
+                </StackPanel>
+
+                <StackPanel Margin="0 10 0 0">
+                    <TextBox Grid.Column="0" Margin="8"
+                             materialDesign:HintAssist.Hint="Image URL"
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" 
+                             Text="{Binding Parent.Edit.Image, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"/>
+                </StackPanel>
+
+                <Ellipse Height="160" Width="160" Margin="10">
+                    <Ellipse.Fill>
+                        <ImageBrush ImageSource="{Binding Parent.Edit.Image}"/>
+                    </Ellipse.Fill>
+                </Ellipse>
+            </StackPanel>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Height="Auto" Margin="10"
+                    HorizontalAlignment="Right">
+            <mvvmControls:CommandControl DataContext="{Binding RemoveCommandViewModel}" Margin="10 0"></mvvmControls:CommandControl>
+            <mvvmControls:CommandControl DataContext="{Binding SaveCommandViewModel}"></mvvmControls:CommandControl>
+        </StackPanel>
+    </Grid>
+</UserControl>

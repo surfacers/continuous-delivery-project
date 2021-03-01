@@ -1,0 +1,21 @@
+<div *ngIf="skier != null">
+    <h1 class="p-2">Skier</h1>
+    <div class="d-flex">
+        <app-data-field class="flex-1 mr-2" label="First Name" [value]="skier.firstName"></app-data-field>
+        <app-data-field class="flex-1 ml-2" label="Last Name" [value]="skier.lastName"></app-data-field>
+    </div>
+
+    <div class="d-flex">
+        <app-data-field class="flex-1 mr-2" label="Gender" [value]="formatGender(skier.gender)"></app-data-field>
+        <app-data-field class="flex-1 ml-2" label="Country" [value]="skier.countryCode"></app-data-field>
+    </div>
+
+    <div class="d-flex">
+        <app-data-field class="flex-1 mr-2" label="Birth Date" [value]="skier.birthDate | date: 'dd.MM.yyyy'"></app-data-field>
+        <app-data-field class="flex-1 ml-2" label="Has active career" [value]="skier.isActive ? 'Yes' : 'No'"></app-data-field>
+    </div>
+
+    <div class="d-flex flex-col align-items-center">
+        <img *ngIf="skier.image" class="skier-image rounded" [src]="skier.image" alt="Skier Image" />
+    </div>
+</div>

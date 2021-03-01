@@ -1,0 +1,12 @@
+<mat-toolbar color="primary" class="no-shrink">
+    <span>Hurace</span>
+    <span class="flex-1"></span>
+    <span *ngIf="auth.userProfile$ | async as profile" class="text-smaller">
+        {{ profile.name }}
+    </span>
+    <button mat-button (click)="auth.login()" *ngIf="!auth.loggedIn">Log In</button>
+    <button mat-button (click)="auth.logout()" *ngIf="auth.loggedIn">Log Out</button>
+</mat-toolbar>
+
+<app-tab-nav [links]="navLinks"></app-tab-nav>
+<router-outlet></router-outlet>

@@ -1,0 +1,62 @@
+﻿<UserControl x:Class="Hurace.RaceControl.Views.Race.RaceListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:Hurace.RaceControl.Views.Race"
+             xmlns:listType="clr-namespace:Hurace.RaceControl.ViewModels.Race"
+             xmlns:raceType="clr-namespace:Hurace.Core.Models;assembly=Hurace.Core"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:controls="clr-namespace:Hurace.RaceControl.Views.Controls"
+             xmlns:mvvmControls="clr-namespace:Hurace.Mvvm.Views.Controls;assembly=Hurace.Mvvm"
+             mc:Ignorable="d"
+             d:DesignHeight="450" d:DesignWidth="200">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <TextBox Margin="10"
+                 Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                 materialDesign:HintAssist.Hint="Search"
+                 Text="{Binding Parent.Races.Filter, UpdateSourceTrigger=PropertyChanged}"></TextBox>
+
+        <ListBox Grid.Row="1"
+                 Style="{StaticResource EmptyListStyle}"
+                 ItemsSource="{Binding Parent.Races.Filtered}"
+                 SelectedItem="{Binding Parent.Races.Selected}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Width="20" Height="20" 
+                                                 VerticalAlignment="Center" 
+                                                 Kind="{Binding RaceState, Converter={StaticResource RaceStateIconConverter}}"
+                                                 Margin="0 0 5 0"/>
+                        
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <TextBlock Grid.Row="0"
+                            Text="{Binding Name}" FontWeight="Bold" Margin="0 0 5 0"></TextBlock>
+                            <StackPanel Margin="0,2,0,0" Grid.Row="1" Orientation="Horizontal">
+                                <TextBlock Text="{Binding RaceDate}" Margin="0 0 5 0"></TextBlock>
+                                <materialDesign:PackIcon Width="12" Height="12" VerticalAlignment="Center" Kind="{Binding Gender, Converter={StaticResource GenderIconConverter}}" Margin="0 0 5 0"/>
+                                <TextBlock Text="{Binding RaceType}" Margin="0 0 5 0"></TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Height="Auto" Margin="10"
+                    HorizontalAlignment="Right">
+            <mvvmControls:CommandControl DataContext="{Binding StopRaceCommandViewModel}" Margin="0 0 8 0"/>
+            <mvvmControls:CommandControl DataContext="{Binding NewCommandViewModel}"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

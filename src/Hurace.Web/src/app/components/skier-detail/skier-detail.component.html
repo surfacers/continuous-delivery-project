@@ -1,0 +1,10 @@
+<div [ngSwitch]="skier.kind" class="flex-1 d-flex flex-col">
+
+    <ng-container *ngSwitchCase="'Data'">
+        <app-skier-info *ngIf="!auth.loggedIn" [skier]="skier.data"></app-skier-info>
+        <app-skier-edit *ngIf="auth.loggedIn" [skier]="skier.data"></app-skier-edit>
+    </ng-container>
+
+    <app-loading *ngSwitchCase="'Loading'"></app-loading>
+    <app-error-info *ngSwitchCase="'Error'"></app-error-info>
+</div>

@@ -1,0 +1,17 @@
+<div class="d-flex align-items-center">
+    <div class="mr-2" *ngIf="race.raceState == 1">
+        <div class="d-flex align-items-center border-2 border-danger text-danger p-1 badge-radius">
+            <span class="mr-1 bg-danger rounded live-size"></span>
+            live
+        </div>
+    </div>
+
+    <h1 class="m-0">{{ race.name }}</h1>
+</div>
+
+<p>{{ race.description }}</p>
+<p>
+    <span>{{ formatRaceType(race.raceType) }}</span> -
+    <span>{{ formatGender(race.gender) }}</span> -
+    <span>at {{ getLocation(race.locationId).city }} in {{ getLocation(race.locationId).countryCode }}</span>
+</p>

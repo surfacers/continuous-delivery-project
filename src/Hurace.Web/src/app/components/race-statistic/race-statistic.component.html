@@ -1,0 +1,52 @@
+<div [ngSwitch]="statistic.kind">
+    <div *ngSwitchCase="'Data'" class="d-flex flex-col">
+        <table *ngIf="statistic.data.length > 0" mat-table [dataSource]="statistic.data" class="flex-1">
+            <ng-container matColumnDef="currentPosition">
+                <th mat-header-cell *matHeaderCellDef> Pos </th>
+                <td mat-cell *matCellDef="let element"> {{element.currentPosition}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="deltaPosition">
+                <th mat-header-cell *matHeaderCellDef> Delta Pos </th>
+                <td mat-cell *matCellDef="let element">
+                    <span class="mdi pr-1" [ngClass]="{
+                        'mdi-arrow-up': element.deltaPosition > 0,
+                        'mdi-arrow-down': element.deltaPosition < 0,
+                        'mdi-equal': element.deltaPosition === 0 }"></span>
+                    <span *ngIf="element.deltaPosition !== 0">{{element.deltaPosition}}</span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="skierId">
+                <th mat-header-cell *matHeaderCellDef> Skier </th>
+                <td mat-cell *matCellDef="let element"> {{ element.skierName }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="skierCountry">
+                <th mat-header-cell *matHeaderCellDef> Country </th>
+                <td mat-cell *matCellDef="let element"> {{ element.skierCountry }} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="time">
+                <th mat-header-cell *matHeaderCellDef> Total Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="deltaTimeLeadership">
+                <th mat-header-cell *matHeaderCellDef> Delta Time </th>
+                <td mat-cell *matCellDef="let element"> {{element.deltaTimeLeadership}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="{ 'bg-selected': isCurrentRun(row.skierId) }"></tr>
+        </table>
+
+        <app-icon-info *ngIf="statistic.data.length === 0" icon="flag-outline">
+            No skier has finished yet
+        </app-icon-info>
+    </div>
+
+    <app-loading *ngSwitchCase="'Loading'"></app-loading>
+    <app-error-info *ngSwitchCase="'Error'"></app-error-info>
+</div>

@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="Hurace.RaceControl.Views.Race.RaceView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Hurace.RaceControl.Views.Race"
+      xmlns:controls="clr-namespace:Hurace.RaceControl.Views.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="200" Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="9*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <local:RaceListView Grid.Column="0" DataContext="{Binding RaceListViewModel}"></local:RaceListView>
+        <GridSplitter Grid.Column="0" Background="Black" Width="2"></GridSplitter>
+        <local:RaceDetailView Grid.Column="1" DataContext="{Binding RaceDetailViewModel}"></local:RaceDetailView>
+
+        <controls:EmptySpaceControl 
+            Grid.Column="1"
+            Visibility="{Binding Races.Selected, Converter={StaticResource NullToVisibilityConverter}}"></controls:EmptySpaceControl>
+    </Grid>
+</UserControl>

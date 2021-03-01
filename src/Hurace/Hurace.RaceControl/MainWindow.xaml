@@ -1,0 +1,22 @@
+﻿<Window x:Class="Hurace.RaceControl.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hurace.RaceControl"
+        xmlns:control="clr-namespace:Hurace.RaceControl.Views.Controls"
+        mc:Ignorable="d"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal" 
+        TextOptions.TextRenderingMode="Auto"        
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Hurace" Height="700" Width="1200"
+        MinHeight="700" MinWidth="1200" >
+    <Grid>
+        <control:NavigationControl DataContext="{Binding NavigationViewModel}"></control:NavigationControl>
+        <control:NotificationControl DataContext="{Binding NotificationService}"></control:NotificationControl>
+    </Grid>  
+</Window>

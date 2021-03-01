@@ -1,0 +1,52 @@
+<div [ngSwitch]="races.kind" class="flex-1 d-flex flex-col p-4">
+    <div *ngSwitchCase="'Data'" class="mw-800px">
+        <mat-form-field *ngIf="seasons.kind == 'Data'">
+            <mat-select placeholder="Season" [ngModel]="selectedSeason" (ngModelChange)="selectionChanged($event)">
+                <mat-option *ngFor="let season of seasons.data" [value]="season">{{season.name}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <h3>{{ total }} races</h3>
+
+        <mat-tab-group class="no-shrink">
+            <mat-tab *ngFor="let group of groups" [label]="formatRaceType(group.raceType)">
+                <div class="d-flex flex-col">
+                    <table mat-table [dataSource]="group.data" class="flex-1">
+                        <ng-container matColumnDef="name">
+                            <th mat-header-cell *matHeaderCellDef> Name </th>
+                            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="raceDate">
+                            <th mat-header-cell *matHeaderCellDef> Date </th>
+                            <td mat-cell *matCellDef="let element"> {{element.raceDate | date:'dd.MM.yyyy'}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="gender">
+                            <th mat-header-cell *matHeaderCellDef> Gender </th>
+                            <td mat-cell *matCellDef="let element"> {{ formatGender(element.gender) }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="actions">
+                            <th mat-header-cell *matHeaderCellDef></th>
+                            <td mat-cell *matCellDef="let element">
+                                <ng-container [ngSwitch]="element.raceState">
+                                    <a *ngSwitchCase="1" mat-button color="warn"
+                                        [routerLink]="['/races', element.id]">Watch live</a>
+                                    <a *ngSwitchCase="2" mat-button color="primary"
+                                        [routerLink]="['/races', element.id]">Show results</a>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                </div>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+
+    <app-loading *ngSwitchCase="'Loading'"></app-loading>
+    <app-error-info *ngSwitchCase="'Error'"></app-error-info>
+</div>

@@ -1,0 +1,13 @@
+:host {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+.mat-nav-list a.active {
+    background: rgba(0,0,0,.08);
+}
+
+.pt-2px {
+    padding-top: 2px;
+}

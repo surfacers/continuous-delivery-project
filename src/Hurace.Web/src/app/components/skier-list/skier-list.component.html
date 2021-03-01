@@ -1,0 +1,31 @@
+<div [ngSwitch]="skiers.kind" class="flex-1 d-flex flex-col mw-400px shadow">
+
+    <ng-container *ngSwitchCase="'Data'">
+        <div class="d-flex flex-col px-2 pt-1">
+            <mat-form-field>
+                <input matInput placeholder="Search" [(ngModel)]="filter" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <app-icon-info icon="image-filter-hdr" *ngIf="filteredSkiers.length === 0">
+            no skier found
+        </app-icon-info>
+
+        <mat-nav-list class="flex-1 mh-100 overflow-auto p-0">
+            <a mat-list-item *ngFor="let skier of filteredSkiers" routerLink="{{ skier.id }}" routerLinkActive="active">
+                <b class="pr-1">{{ skier.countryCode }}</b> {{ skier.firstName }} {{ skier.lastName }}
+            </a>
+        </mat-nav-list>
+
+        <div class="d-flex justify-content-end p-2" *ngIf="auth.loggedIn">
+            <button mat-raised-button color="primary" (click)="new()">New</button>
+        </div>
+    </ng-container>
+
+    <app-loading *ngSwitchCase="'Loading'"></app-loading>
+    <app-error-info *ngSwitchCase="'Error'"></app-error-info>
+</div>
+
+<div class="flex-1 p-3 overflow-auto">
+    <router-outlet></router-outlet>
+</div>
