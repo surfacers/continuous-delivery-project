@@ -25,11 +25,11 @@
 
             <TextBlock Grid.Column="0"
                 Text="Startlist"
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                Style="{StaticResource MaterialDesignHeadline5TextBlock}"></TextBlock>
 
             <TextBlock Grid.Column="1"
                 Text="Add"
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                Style="{StaticResource MaterialDesignHeadline5TextBlock}"></TextBlock>
         </Grid>
 
         <Grid Grid.Row="1">

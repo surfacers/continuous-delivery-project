@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Hurace.RaceControl"
         xmlns:control="clr-namespace:Hurace.RaceControl.Views.Controls"
         mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -18,5 +19,5 @@
     <Grid>
         <control:NavigationControl DataContext="{Binding NavigationViewModel}"></control:NavigationControl>
         <control:NotificationControl DataContext="{Binding NotificationService}"></control:NotificationControl>
-    </Grid>  
+    </Grid>
 </Window>

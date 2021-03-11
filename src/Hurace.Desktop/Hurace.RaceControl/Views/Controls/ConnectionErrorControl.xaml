@@ -9,7 +9,7 @@
     <Border Grid.Column="1" Background="{StaticResource MaterialDesignBackground}"
             BorderThickness="0">
         <TextBlock 
-                Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                 Text="No connection could be established."
                 HorizontalAlignment="Center" VerticalAlignment="Center">
         </TextBlock>

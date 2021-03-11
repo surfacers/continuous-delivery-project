@@ -35,7 +35,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Border BorderBrush="DarkGray" BorderThickness="6"></Border>
                                 <TextBlock Background="Gray" Opacity="0.8" Padding="30 0 10 0" FontSize="40"
-                                           Foreground="White" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                                           Foreground="White" Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                                            Text="{Binding TotalTime, StringFormat={}{0:mm:ss.fff}}" TextAlignment="Right"></TextBlock>   
                             </StackPanel>
                         </Border>
@@ -52,19 +52,19 @@
             <Border BorderBrush="White" BorderThickness="2"
                     Visibility="{Binding CurrentRun.Position, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
                 <TextBlock Background="Gold" Foreground="Black" Padding="10, 0, 10, 0"
-                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Text="{Binding CurrentRun.Position}" TextAlignment="Center" FontSize="40"></TextBlock>
             </Border>
 
             <Border BorderBrush="White" BorderThickness="2">
                 <TextBlock Background="MidnightBlue" VerticalAlignment="Center" Padding="30 0"
-                           Foreground="White" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                           Foreground="White" Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Text="{Binding CurrentRun.FullName}" TextAlignment="Center" FontSize="40"></TextBlock>
             </Border>
             
             <Border BorderBrush="White" BorderThickness="2">
                 <TextBlock Background="DarkBlue" Padding="20 0 20 0"
-                           Foreground="White" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                           Foreground="White" Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Text="{Binding CurrentRun.TotalTime, StringFormat={}{0:mm:ss.fff}}" 
                            TextAlignment="Center" FontSize="40">
                 </TextBlock>
@@ -73,7 +73,7 @@
             <Border BorderBrush="White" BorderThickness="2" Background="DarkSlateBlue"
                     Visibility="{Binding CurrentRun.DiffTime, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=True}">
                 <TextBlock Padding="20 0 20 0"
-                           Foreground="White" Style="{StaticResource MaterialDesignHeadlineTextBlock}"
+                           Foreground="White" Style="{StaticResource MaterialDesignHeadline5TextBlock}"
                            Text="{Binding CurrentRun.DiffTime, StringFormat={}{0:+mm:ss.fff}}"
                            TextAlignment="Center" FontSize="25" VerticalAlignment="Center">
                 </TextBlock>

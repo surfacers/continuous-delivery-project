@@ -18,7 +18,7 @@
             <StackPanel Grid.Row="0" MaxWidth="500">
                 <TextBlock Margin="8 16"
                            Text="{Binding Parent.Edit.DisplayName}"
-                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"></TextBlock>
 
                 <TextBox Grid.Row="0" Margin="8"
                             materialDesign:HintAssist.Hint="Name"

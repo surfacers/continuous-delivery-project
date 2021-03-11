@@ -67,7 +67,7 @@
                                          VerticalAlignment="Center" Grid.Row="0" />
 
                 <TextBlock Text="Times" VerticalAlignment="Center" Margin="10 0 0 0"
-                           Style="{StaticResource MaterialDesignHeadlineTextBlock}"></TextBlock>
+                           Style="{StaticResource MaterialDesignHeadline5TextBlock}"></TextBlock>
             </StackPanel>
 
             <TextBlock Grid.Row="1" Margin="40 20 0 0"
