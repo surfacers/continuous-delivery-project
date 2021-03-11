@@ -1,0 +1,51 @@
+trigger:
+- master
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  projectName: 'Hurace.Api'
+  projectPath: 'src/Hurace.Api/Hurace.Api'
+  projectFile: 'src/Hurace.Api/Hurace.Api/Hurace.Api.csproj'
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Restore packages'
+  inputs:
+    command: 'restore'
+    projects: $(projectFile)
+    feedsToUse: 'select'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Build project'
+  inputs:
+    command: 'build'
+    projects: $(projectFile)
+    configuration: $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: 'Publish project'
+  inputs:
+    command: 'publish'
+    projects: $(projectFile)
+    arguments: '--output $(build.artifactstagingdirectory)'
+    publishWebProjects: false
+    zipAfterPublish: false
+    modifyOutputPath: true
+
+- task: ArchiveFiles@2
+  displayName: 'Archive'
+  inputs:
+    rootFolderOrFile: '$(build.artifactstagingdirectory)/$(projectName)'
+    includeRootFolder: false
+    archiveFile: '$(build.artifactstagingdirectory)/$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    ArtifactName: $(projectName)
+    publishLocation: Container
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
