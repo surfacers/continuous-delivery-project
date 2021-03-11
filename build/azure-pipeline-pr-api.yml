@@ -1,0 +1,24 @@
+pr: 
+  branches:
+    include:
+      - '*'
+
+variables:
+  solution: 'src/Hurace.Api/Hurace.Api.sln'
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Build solution'
+  inputs:
+    command: 'build'
+    projects: $(solution)
+    configuration: $(buildConfiguration)
+
+- task: DotNetCoreCLI@2
+  displayName: 'Execute Unit Tests'
+  inputs:
+    command: 'test'
+    projects: $(solution)
+    configuration: $(buildConfiguration)
+    nobuild: true
