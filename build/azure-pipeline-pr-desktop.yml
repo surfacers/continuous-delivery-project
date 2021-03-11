@@ -3,6 +3,9 @@ pr:
     include:
       - '*'
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   solution: 'src/Hurace.Desktop/Hurace.Desktop.sln'
   buildConfiguration: 'Release'
