@@ -59,4 +59,12 @@ export class RaceDetailComponent implements OnInit {
             && this.race.kind === 'Data'
             && this.liveStatistic.raceId === this.race.data.id;
     }
+
+    get data(): RaceDto {
+        if (this.race.kind === 'Data') {
+            return this.race.data;
+        }
+
+        return null;
+    }
 }

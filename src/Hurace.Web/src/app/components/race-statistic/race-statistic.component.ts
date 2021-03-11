@@ -58,4 +58,11 @@ export class RaceStatisticComponent implements OnInit {
             && this.liveStatistic.runNumber === this.runNumber;
     }
 
+    get data(): RaceStatisticEntry[] {
+        if (this.statistic.kind === 'Data') {
+            return this.statistic.data;
+        }
+
+        return [];
+    }
 }

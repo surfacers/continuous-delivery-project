@@ -1,15 +1,15 @@
 <div [ngSwitch]="race.kind" class="flex-1 d-flex flex-col mw-800px">
     <ng-container *ngSwitchCase="'Data'">
-        <ng-container [ngSwitch]="race.data.raceState">
+        <ng-container [ngSwitch]="data.raceState">
             <!-- NotStarted -->
             <app-icon-info *ngSwitchCase='0' icon="flag-outline">
                 Race is not started yet. <br>
-                Watch live on {{ race.data.raceDate | date:'dd.MM.yyyy' }}.
+                Watch live on {{ data.raceDate | date:'dd.MM.yyyy' }}.
             </app-icon-info>
 
             <!-- Running -->
             <div *ngSwitchCase='1'>
-                <app-race-info [race]="race.data" [locations]="locations"></app-race-info>
+                <app-race-info [race]="data" [locations]="locations"></app-race-info>
 
                 <!-- Current Skier -->
                 <app-live-statistic *ngIf="showLiveStatistic()"
@@ -21,7 +21,7 @@
 
             <!-- Done -->
             <div *ngSwitchCase='2'>
-                <app-race-info [race]="race.data" [locations]="locations"></app-race-info>
+                <app-race-info [race]="data" [locations]="locations"></app-race-info>
                 <app-tab-nav [links]="navLinks"></app-tab-nav>
                 <router-outlet></router-outlet>
             </div>

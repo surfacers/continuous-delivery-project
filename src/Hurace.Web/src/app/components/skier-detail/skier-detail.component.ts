@@ -31,4 +31,12 @@ export class SkierDetailComponent implements OnInit {
             this.store.dispatch(new GetSkierById(id));
         });
     }
+
+    get data(): SkierDto {
+        if (this.skier.kind === 'Data') {
+            return this.skier.data;
+        }
+
+        return null;
+    }
 }

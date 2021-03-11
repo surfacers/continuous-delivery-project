@@ -45,7 +45,7 @@ import { LiveStatisticComponent } from './components/live-statistic/live-statist
 import { environment } from 'src/environments/environment';
 import { RaceInfoComponent } from './components/shared/race-info/race-info.component';
 
-function initSignalR(liveService: LiveService) {
+export function initSignalR(liveService: LiveService) {
     return () => liveService.initSignalR();
 }
 

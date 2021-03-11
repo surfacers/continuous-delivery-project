@@ -1,6 +1,6 @@
 <div [ngSwitch]="statistic.kind">
     <div *ngSwitchCase="'Data'" class="d-flex flex-col">
-        <table *ngIf="statistic.data.length > 0" mat-table [dataSource]="statistic.data" class="flex-1">
+        <table *ngIf="data.length > 0" mat-table [dataSource]="data" class="flex-1">
             <ng-container matColumnDef="currentPosition">
                 <th mat-header-cell *matHeaderCellDef> Pos </th>
                 <td mat-cell *matCellDef="let element"> {{element.currentPosition}} </td>
@@ -42,7 +42,7 @@
                 [ngClass]="{ 'bg-selected': isCurrentRun(row.skierId) }"></tr>
         </table>
 
-        <app-icon-info *ngIf="statistic.data.length === 0" icon="flag-outline">
+        <app-icon-info *ngIf="data.length === 0" icon="flag-outline">
             No skier has finished yet
         </app-icon-info>
     </div>
