@@ -110,6 +110,7 @@ namespace Hurace.RaceControl
 
             // SignalR
             string signalREndpoint = ConfigurationManager.AppSettings["SignalREndpoint"].ToString();
+            Console.WriteLine(signalREndpoint);
             var connection = new HubConnectionBuilder()
                 .WithUrl(signalREndpoint)
                 .Build();

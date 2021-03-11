@@ -1,4 +1,4 @@
 export const environment = {
     production: true,
-    apiBaseUrl: 'http://localhost:60346'
+    apiBaseUrl: 'https://hurace-api.azurewebsites.net'
 };
