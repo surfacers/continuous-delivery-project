@@ -91,8 +91,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hurace.Core\Hurace.Core.csproj">
-      <Project>{312D2702-BAD6-4658-AE58-4029EC7497AB}</Project>
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Core\Hurace.Core.csproj">
+      <Project>{b327bfa1-ab37-4c1d-a576-8fb06f850405}</Project>
       <Name>Hurace.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hurace.Mvvm\Hurace.Mvvm.csproj">

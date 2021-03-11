@@ -428,20 +428,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hurace.Core\Hurace.Core.csproj">
-      <Project>{312d2702-bad6-4658-ae58-4029ec7497ab}</Project>
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Core\Hurace.Core.csproj">
+      <Project>{b327bfa1-ab37-4c1d-a576-8fb06f850405}</Project>
       <Name>Hurace.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hurace.Data.Ado\Hurace.Data.Ado.csproj">
-      <Project>{8e73674e-c028-41f8-ab86-48834ca36123}</Project>
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Data.Ado\Hurace.Data.Ado.csproj">
+      <Project>{3ebf0f06-d11d-44d1-8db1-4bf9c0137160}</Project>
       <Name>Hurace.Data.Ado</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hurace.Data\Hurace.Data.csproj">
-      <Project>{61be5f59-8d3a-41f8-ad6b-b7ffc38efebc}</Project>
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Data\Hurace.Data.csproj">
+      <Project>{d0a1454d-d43a-4470-8969-41b5d1e4e6c6}</Project>
       <Name>Hurace.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Hurace.Logic\Hurace.Logic.csproj">
-      <Project>{92150370-1450-404e-bda5-7067c2bffefd}</Project>
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Logic\Hurace.Logic.csproj">
+      <Project>{4ea92c57-8161-426a-b88a-ab004a282f4f}</Project>
       <Name>Hurace.Logic</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hurace.Mvvm\Hurace.Mvvm.csproj">

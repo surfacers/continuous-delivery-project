@@ -14,9 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Hurace.Core\Hurace.Core.csproj" />
-    <ProjectReference Include="..\Hurace.Data.Ado\Hurace.Data.Ado.csproj" />
-    <ProjectReference Include="..\Hurace.Logic\Hurace.Logic.csproj" />
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Core\Hurace.Core.csproj" />
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Data.Ado\Hurace.Data.Ado.csproj" />
+    <ProjectReference Include="..\..\Hurace.Shared\Hurace.Logic\Hurace.Logic.csproj" />
   </ItemGroup>
 
 </Project>
