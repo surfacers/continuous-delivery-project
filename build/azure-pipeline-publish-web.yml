@@ -3,7 +3,7 @@ trigger:
 pr: none
 
 pool:
-  vmImage: 'windows-latest'
+  vmImage: 'ubuntu-latest'
 
 variables:
   projectName: 'Hurace.Web'
@@ -25,6 +25,6 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
   inputs:
+    pathToPublish: '$(projectPath)/dist'
     artifactName: $(projectName)
     publishLocation: Container
-    pathToPublish: '$(projectPath)/dist'
