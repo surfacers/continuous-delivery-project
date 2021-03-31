@@ -5,6 +5,7 @@ trigger:
   paths:
     include:
       - 'src/Hurace.Desktop'
+      - 'src/Hurace.Shared'
 pr:
   branches:
     include:
