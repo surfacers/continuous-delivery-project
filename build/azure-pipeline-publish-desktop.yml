@@ -1,0 +1,37 @@
+trigger:
+- main
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  projectName: 'Hurace.Desktop'
+  projectPath: 'src/Hurace.Desktop/Hurace.RaceControl'
+  projectFile: 'src/Hurace.Desktop/Hurace.RaceControl/Hurace.RaceControl.csproj'
+  buildConfiguration: 'Release'
+
+steps:
+- task: DotNetCoreCLI@2
+  displayName: 'Publish project'
+  inputs:
+    command: 'publish'
+    projects: $(projectFile)
+    arguments: '-r win10-x64 /p:PublishSingleFile=true /property:InformationalVersion=$(Build.BuildNumber) --output $(build.artifactstagingdirectory)'
+    publishWebProjects: false
+    zipAfterPublish: false
+    modifyOutputPath: true
+
+- task: ArchiveFiles@2
+  displayName: 'Archive'
+  inputs:
+    rootFolderOrFile: '$(build.artifactstagingdirectory)/$(projectName)'
+    includeRootFolder: false
+    archiveFile: '$(build.artifactstagingdirectory)/$(Build.BuildId).zip'
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    ArtifactName: $(projectName)
+    publishLocation: Container
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
