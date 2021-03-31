@@ -1,4 +1,11 @@
-pr: 
+trigger:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - 'src/Hurace.Api'
+pr:
   branches:
     include:
       - '*'

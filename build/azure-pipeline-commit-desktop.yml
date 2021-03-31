@@ -1,4 +1,11 @@
-pr: 
+trigger:
+  branches:
+    include:
+      - '*'
+  paths:
+    include:
+      - 'src/Hurace.Desktop'
+pr:
   branches:
     include:
       - '*'
