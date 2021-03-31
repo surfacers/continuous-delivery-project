@@ -59,7 +59,7 @@ namespace Hurace.Api
                 {
                     document.Info.Version = "v1";
                     document.Info.Title = "Hurace.Api";
-                    document.Info.Description = "Christoph's and Daniel's Core 3.0 Api for Hurace";
+                    document.Info.Description = "Christoph's and Daniel's Api for Hurace";
                     document.Info.TermsOfService = "None";
                 };
             });
