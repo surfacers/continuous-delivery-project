@@ -139,9 +139,6 @@ namespace Hurace.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            // TODO:
-            app.UseDeveloperExceptionPage();
-
             app.UseStaticFiles();
 
             // Register the Swagger generator and the Swagger UI middlewares
