@@ -22,7 +22,7 @@ steps:
     ng build --prod
   displayName: 'Build Angular Project'
 
-- task: PublishPipelineArtifact@1
+- task: PublishBuildArtifacts@1
   displayName: 'Publish Artifacts'
   inputs:
     artifactName: $(projectName)
