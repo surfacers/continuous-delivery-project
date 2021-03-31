@@ -1,0 +1,30 @@
+trigger:
+- main
+pr: none
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  projectName: 'Hurace.Web'
+  projectPath: 'src/Hurace.Web'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '12.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd $(solution)
+    npm install -g @angular/cli
+    npm install
+    ng build --prod
+  displayName: 'Build Angular Project'
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Artifacts'
+  inputs:
+    artifactName: $(projectName)
+    publishLocation: Container
+    pathToPublish: '$(projectPath)/dist'
