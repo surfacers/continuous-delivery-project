@@ -8,9 +8,6 @@ trigger:
       - 'src/Hurace.Shared'
 pr: none
 
-pool:
-  vmImage: 'windows-latest'
-
 variables:
   projectName: 'Hurace.Api'
   projectPath: 'src/Hurace.Api/Hurace.Api'
