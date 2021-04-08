@@ -10,6 +10,10 @@ pr:
   branches:
     include:
       - '*'
+  paths:
+    include:
+      - 'src/Hurace.Api'
+      - 'src/Hurace.Shared'
 
 variables:
   solution: 'src/Hurace.Api/Hurace.Api.sln'

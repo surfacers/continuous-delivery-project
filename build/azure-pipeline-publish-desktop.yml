@@ -15,7 +15,6 @@ variables:
   projectName: 'Hurace.RaceControl'
   projectPath: 'src/Hurace.Desktop/Hurace.RaceControl'
   projectFile: 'src/Hurace.Desktop/Hurace.RaceControl/Hurace.RaceControl.csproj'
-  buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreCLI@2
@@ -23,7 +22,7 @@ steps:
   inputs:
     command: 'publish'
     projects: $(projectFile)
-    arguments: '-r win10-x64 -c $(buildConfiguration) /p:PublishSingleFile=true /property:InformationalVersion=$(Build.BuildNumber) --output $(build.artifactstagingdirectory)'
+    arguments: '-r win10-x64 -c Release /p:PublishSingleFile=true /property:InformationalVersion=$(Build.BuildNumber) --output $(build.artifactstagingdirectory)'
     publishWebProjects: false
     zipAfterPublish: false
     modifyOutputPath: true
