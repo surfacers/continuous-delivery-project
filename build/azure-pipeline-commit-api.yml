@@ -15,6 +15,9 @@ pr:
       - 'src/Hurace.Api'
       - 'src/Hurace.Shared'
 
+pool:
+  vmImage: 'windows-latest'
+
 variables:
   solution: 'src/Hurace.Api/Hurace.Api.sln'
   buildConfiguration: 'Release'
