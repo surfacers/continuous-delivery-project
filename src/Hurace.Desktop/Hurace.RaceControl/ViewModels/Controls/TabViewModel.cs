@@ -36,7 +36,7 @@ namespace Hurace.RaceControl.ViewModels.Controls
             {
                 await this.OnInitAsync();
             } 
-            catch (Exception)
+            catch (Exception ex)
             {
                 this.IsLoading = false;
                 this.ConnectionError = true;
