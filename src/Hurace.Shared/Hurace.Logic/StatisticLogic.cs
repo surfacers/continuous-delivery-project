@@ -30,8 +30,8 @@ namespace Hurace.Logic
 
         private async Task<IEnumerable<RaceResult>> GetRaceResults(int raceId, int runNumber, int sensorAmount)
         {
-            IEnumerable<StartList> startList = await startListManager.GetByRaceIdAsync(raceId, runNumber);
-            var raceData = await raceDataManager.GetByRaceIdAsync(raceId, runNumber);
+            IEnumerable<StartList> startList = await this.startListManager.GetByRaceIdAsync(raceId, runNumber);
+            var raceData = await this.raceDataManager.GetByRaceIdAsync(raceId, runNumber);
 
             var raceResult = startList
                 .Where(s => !s.IsDisqualified)
@@ -71,24 +71,27 @@ namespace Hurace.Logic
 
         public async Task<IEnumerable<RaceStatisticEntry>> GetRaceStatistics(int raceId, int runNumber, int sensorAmount)
         {
-            if (runNumber != 1 && runNumber != 2) throw new ArgumentException();
+            if (runNumber != 1 && runNumber != 2)
+            {
+                throw new ArgumentException();
+            }
 
-            var raceResults1 = await GetRaceResults(raceId, runNumber: 1, sensorAmount);
-            var statsRun1 = GetRaceStatisticEntry(raceResults1);
+            var raceResults1 = await this.GetRaceResults(raceId, runNumber: 1, sensorAmount);
+            var statsRun1 = this.GetRaceStatisticEntry(raceResults1);
 
             if (runNumber == 1)
             {
                 return statsRun1;
             }
 
-            var raceResults2 = await GetRaceResults(raceId, runNumber: 2, sensorAmount);
+            var raceResults2 = await this.GetRaceResults(raceId, runNumber: 2, sensorAmount);
             foreach (var raceResult in raceResults2)
             {
                 var previousResult = raceResults1.Where(r => r.SkierId == raceResult.SkierId).First();
                 raceResult.Time = raceResult.Time.Add(previousResult.Time);
             }
 
-            var statsRun2 = GetRaceStatisticEntry(raceResults2);
+            var statsRun2 = this.GetRaceStatisticEntry(raceResults2);
             foreach (var stat in statsRun2)
             {
                 var previousPosition = statsRun1.Where(s => s.SkierId == stat.SkierId).First().CurrentPosition;

@@ -8,10 +8,10 @@ namespace Hurace.Core.Validators
     {
         public RaceDataValidator()
         {
-            RuleFor(r => r.Id).PrimaryKey();
-            RuleFor(r => r.StartListId).ForeignKey();
-            RuleFor(r => r.SensorId).GreaterThanOrEqualTo((byte)0);
-            RuleFor(r => r.TimeStamp).NotDefaultDateTime();
+            this.RuleFor(r => r.Id).PrimaryKey();
+            this.RuleFor(r => r.StartListId).ForeignKey();
+            this.RuleFor(r => r.SensorId).GreaterThanOrEqualTo((byte)0);
+            this.RuleFor(r => r.TimeStamp).NotDefaultDateTime();
         }
     }
 }

@@ -26,19 +26,19 @@ namespace Hurace.Core.Logic
 
         public async Task<IEnumerable<Skier>> GetAllAsync(Gender gender, bool isActive = true)
         {
-            var skiers = await skierManager.GetAllAsync(gender, isActive);
+            var skiers = await this.skierManager.GetAllAsync(gender, isActive);
             return skiers.OrderBy(s => s.FullName()).ToList();
         }
 
         public async Task<IEnumerable<Skier>> GetAllAsync(bool? isActive = null)
         {
-            var skiers = await skierManager.GetAllAsync(isActive);
+            var skiers = await this.skierManager.GetAllAsync(isActive);
             return skiers.OrderBy(s => s.FullName()).ToList();
         }
 
         public async Task<Skier> GetByIdAsync(int id)
         {
-            return await skierManager.GetByIdAsync(id);
+            return await this.skierManager.GetByIdAsync(id);
         }
 
         public async Task<bool> RemoveAsync(int id)
@@ -48,7 +48,7 @@ namespace Hurace.Core.Logic
                 return true;
             }
 
-            return await skierManager.RemoveAsync(id);
+            return await this.skierManager.RemoveAsync(id);
         }
 
         public async Task<SaveResult> SaveAsync(Skier skier)
@@ -61,11 +61,11 @@ namespace Hurace.Core.Logic
 
             if (skier.Id == 0)
             {
-                await skierManager.CreateAsync(skier);
+                await this.skierManager.CreateAsync(skier);
             }
             else
             {
-                bool updateSuccess = await skierManager.UpdateAsync(skier);
+                bool updateSuccess = await this.skierManager.UpdateAsync(skier);
                 if (!updateSuccess)
                 {
                     return new SaveResult.Error(ErrorCode.UpdateError);

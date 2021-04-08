@@ -22,7 +22,7 @@ namespace Hurace.RaceControl.Views.Skier
     {
         public SkierListView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

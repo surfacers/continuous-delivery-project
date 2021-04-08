@@ -2,9 +2,8 @@
 
 namespace Hurace.Data.Generator
 {
-    class Program
+    public class Program
     {
-
         // DB Information:
         // Skiers: female Skiers => Id-Rang [203; 302]      |       male Skiers => Id-Range [303; 402]
         // Races: valid IDs [2,3,8,9,10,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,29,30]
@@ -16,12 +15,11 @@ namespace Hurace.Data.Generator
 
         public static void GenStartList(int skierStartIndex, int skierAmount, int run, int raceId)
         {
-            string statement = "";
             int startNumber = 1;
             int lastSkierId = skierAmount + skierStartIndex;
             for (int i = skierStartIndex; i < lastSkierId; i++)
             {
-                statement = $"INSERT INTO StartList(SkierId, RaceId, StartNumber, RunNumber, IsDisqualified) VALUES({i}, {raceId}, {startNumber}, {run}, {0})";
+                string statement = $"INSERT INTO StartList(SkierId, RaceId, StartNumber, RunNumber, IsDisqualified) VALUES({i}, {raceId}, {startNumber}, {run}, {0})";
                 PrintSqlStatement(statement);
                 startNumber++;
             }
@@ -29,27 +27,29 @@ namespace Hurace.Data.Generator
 
         public static void GenSensorData(int startListStartIndex, int skierAmount, int sensorAmount, DateTime raceDate)
         {
-            string statement = "";
             int lastStartListId = startListStartIndex + skierAmount;
             Random rand = new Random();
+            
             // add start delay of 1 - 5 min
-            raceDate = raceDate.AddMinutes(rand.Next(1,6));
+            raceDate = raceDate.AddMinutes(rand.Next(1, 6));
             DateTime sensorTime = raceDate;
-            for(int i = startListStartIndex; i < lastStartListId; i++)
+
+            for (int i = startListStartIndex; i < lastStartListId; i++)
             {
                 sensorTime = sensorTime.AddSeconds(rand.Next(1, 60));
                 for (int j = 1; j <= sensorAmount; j++)
                 {
-                    statement = $"INSERT INTO RaceData(StartListId, SensorId, TimeStamp) VALUES({i}, {j}, '{sensorTime.ToString("yyyy-MM-dd HH:mm:ss.fff")}')";
+                    string statement = $"INSERT INTO RaceData(StartListId, SensorId, TimeStamp) VALUES({i}, {j}, '{sensorTime.ToString("yyyy-MM-dd HH:mm:ss.fff")}')";
                     PrintSqlStatement(statement);
                     sensorTime = sensorTime.AddSeconds(rand.Next(10, 31));
                     sensorTime = sensorTime.AddMilliseconds(rand.Next(50, 1000));
                 }
+
                 sensorTime = sensorTime.AddMinutes(1);
             }
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Console.WriteLine("============ Welcome to Hurace.Data.Generator ============");
 

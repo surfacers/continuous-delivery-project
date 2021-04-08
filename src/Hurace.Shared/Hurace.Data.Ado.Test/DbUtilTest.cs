@@ -8,7 +8,6 @@ namespace Hurace.Data.Ado.Test
 {
     public class DbUtilTest
     {
-
         [Fact]
         public void GetDbProvicerFactoryValidTest()
         {

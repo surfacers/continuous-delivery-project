@@ -31,7 +31,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<LocationDto>>> GetLocations()
         {
             IEnumerable<Location> locations = await this.locationLogic.GetAllAsync();
-            return Ok(mapper.Map<IEnumerable<LocationDto>>(locations));
+            return this.Ok(this.mapper.Map<IEnumerable<LocationDto>>(locations));
         }
 
         [HttpGet]
@@ -40,7 +40,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<string>>> GetCountries()
         {
             IEnumerable<string> countries = await this.locationLogic.GetCountriesAsync();
-            return Ok(countries);
+            return this.Ok(countries);
         }
     }
 }

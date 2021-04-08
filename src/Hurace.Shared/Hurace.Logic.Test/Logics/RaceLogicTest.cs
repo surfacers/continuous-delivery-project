@@ -1,25 +1,24 @@
-﻿using Hurace.Core.Enums;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Hurace.Core.Enums;
 using Hurace.Core.Logic;
 using Hurace.Core.Models;
 using Hurace.Data;
 using Hurace.Data.Ado;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Hurace.Logic.Test.Logics
 {
     public class RaceLogicTest
     {
-
         [Theory]
         [InlineData(12)]
         public async Task GetAllValidTest(int amount)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
 
             var result = (await raceLogic.GetAllAsync()).ToList();
 
@@ -32,7 +31,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(RaceState.Done, 5)]
         public async Task GetByRaceStateValidTest(RaceState state, int amount)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
 
             var result = (await raceLogic.GetByRaceStateAsync(state)).ToList();
 
@@ -46,7 +45,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(24, RaceState.NotStarted)]
         public void CanRemoveValidTest(int raceId, RaceState state)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, RaceState = state };
 
             var result = raceLogic.CanRemove(race);
@@ -61,7 +60,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(30, RaceState.Canceled)]
         public void CanRemoveInvalidTest(int raceId, RaceState state)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, RaceState = state };
 
             var result = raceLogic.CanRemove(race);
@@ -76,7 +75,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(24, RaceState.NotStarted)]
         public async Task RemoveValidTest(int raceId, RaceState state)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, RaceState = state };
 
             var result = await raceLogic.RemoveAsync(race);
@@ -91,7 +90,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(30, RaceState.Canceled)]
         public async Task RemoveInvalidTest(int raceId, RaceState state)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, RaceState = state };
 
             var result = await raceLogic.RemoveAsync(race);
@@ -106,8 +105,9 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(24)]
         public async Task SaveValidTest(int raceId)
         {
-            var raceLogic = GetRaceLogic();
-            var race = new Race {
+            var raceLogic = this.GetRaceLogic();
+            var race = new Race 
+            {
                 Id = raceId,
                 Gender = Gender.Male,
                 LocationId = 1,
@@ -115,20 +115,21 @@ namespace Hurace.Logic.Test.Logics
                 SensorAmount = 5,
                 RaceDate = DateTime.Now,
                 RaceType = RaceType.Downhill,
-                RaceState = RaceState.NotStarted };
+                RaceState = RaceState.NotStarted 
+            };
 
             var result = await raceLogic.SaveAsync(race);
             Assert.True(result.IsSuccess);
         }
 
         [Theory]
-        [InlineData(0,1)]
-        [InlineData(18,1)]
-        [InlineData(19,2)]
-        [InlineData(24,1)]
+        [InlineData(0, 1)]
+        [InlineData(18, 1)]
+        [InlineData(19, 2)]
+        [InlineData(24, 1)]
         public async Task SaveWithStartlistValidTest(int raceId, int runNumber)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race
             {
                 Id = raceId,
@@ -154,7 +155,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(25)]
         public async Task SaveInvalidTest(int raceId)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, Name = "Invalid Race" };
 
             var result = await raceLogic.SaveAsync(race);
@@ -167,13 +168,12 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(-1, -1)]
         public async Task SaveWithStartlistInvalidTest(int raceId, int runNumber)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var race = new Race { Id = raceId, Name = "Invalid Race" };
 
             var result = await raceLogic.SaveAsync(race, runNumber, null);
             Assert.True(result.IsError);
         }
-
 
         [Theory]
         [InlineData(18)]
@@ -181,7 +181,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(24)]
         public async Task StartAsyncValidTest(int raceId)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
 
             var result = await raceLogic.StartAsync(raceId);
 
@@ -194,7 +194,7 @@ namespace Hurace.Logic.Test.Logics
         [InlineData(26)]
         public async Task StartAsyncInvalidTest(int raceId)
         {
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
 
             var result = await raceLogic.StartAsync(raceId);
 
@@ -210,29 +210,25 @@ namespace Hurace.Logic.Test.Logics
 
             raceManager
                 .Setup(m => m.GetByRaceStateAsync(It.IsAny<RaceState>()))
-                .ReturnsAsync((RaceState state) => {
+                .ReturnsAsync((RaceState state) => 
+                {
                     return data.Races
                         .Where(m => m.RaceState == state);
                 });
 
             raceManager
                 .Setup(m => m.UpdateAsync(It.IsAny<Race>()))
-                .ReturnsAsync((Race race) => {
-                    if (race.Id == 18 || race.Id == 19 || race.Id == 24)
-                        return true;
-
-                    return false;
+                .ReturnsAsync((Race race) => 
+                {
+                    return race.Id == 18 || race.Id == 19 || race.Id == 24;
                 });
 
             raceManager
                 .Setup(m => m.UpdateRaceState(It.IsAny<int>(), RaceState.Running))
-                .ReturnsAsync((int raceId, RaceState state) => {
-                    if(raceId == 18 || raceId == 19 || raceId == 24)
-                        return true;
-
-                    return false;
+                .ReturnsAsync((int raceId, RaceState state) => 
+                {
+                    return raceId == 18 || raceId == 19 || raceId == 24;
                 });
-
 
             return raceManager.Object;
         }
@@ -243,11 +239,9 @@ namespace Hurace.Logic.Test.Logics
 
             startListManager
                 .Setup(m => m.SaveAsync(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<IEnumerable<StartList>>()))
-                .ReturnsAsync((int raceId, int runNumber, IEnumerable<StartList> startList) => {
-                    if (raceId == 0 || raceId == 18 || raceId == 19 || raceId == 24)
-                        return true;
-
-                    return false;
+                .ReturnsAsync((int raceId, int runNumber, IEnumerable<StartList> startList) => 
+                {
+                    return raceId == 0 || raceId == 18 || raceId == 19 || raceId == 24;
                 });
 
             return startListManager.Object;
@@ -257,10 +251,9 @@ namespace Hurace.Logic.Test.Logics
         {
             var data = new Data();
             return new RaceLogic(
-                GetRaceManager(data), 
-                GetStartListManager(data), 
-                new Core.Validators.RaceValidator()
-            );
+                this.GetRaceManager(data),
+                this.GetStartListManager(data), 
+                new Core.Validators.RaceValidator());
         }
     }
 }

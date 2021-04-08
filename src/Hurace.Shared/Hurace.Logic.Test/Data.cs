@@ -11,7 +11,7 @@ namespace Hurace.Logic.Test
     {
         public Data()
         {
-            Setup();
+            this.Setup();
         }
 
         public int Id { get; set; }
@@ -23,35 +23,35 @@ namespace Hurace.Logic.Test
 
         private void Setup()
         {
-            Locations = new[]
+            this.Locations = new[]
             {
                 new Location { Id = 1, City = "Hagenberg", CountryCode = "AUT" },
                 new Location { Id = 2, City = "Linz", CountryCode = "AUT" },
                 new Location { Id = 3, City = "Passau", CountryCode = "GER" },
             }.ToList();
 
-            Skiers = new[]
+            this.Skiers = new[]
             {
                 // Male
-                new Skier { Id = 9, FirstName = "Davis", LastName = "Taylor", CountryCode = "FRA", BirthDate = new DateTime(1982, 07, 05, 06, 01, 16), Image = null, IsRemoved =  false, Gender = Gender.Male, IsActive =true },
-                new Skier { Id = 10, FirstName = "Quinn", LastName = "Obrien", CountryCode = "FRA", BirthDate = new DateTime(1997, 07, 07, 04, 17, 04), Image = null, IsRemoved =  false, Gender = Gender.Male, IsActive =true },
-                new Skier { Id = 11, FirstName = "Malcolm", LastName = "Cantu", CountryCode = "FRA", BirthDate = new DateTime(1981, 05, 25, 0, 17, 38), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive =true },
-                new Skier { Id = 12, FirstName = "Marsden", LastName = "Fisher", CountryCode = "FRA", BirthDate = new DateTime(1998, 08, 17, 15, 57, 44), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive =true },
-                new Skier { Id = 13, FirstName = "Gray", LastName = "Cannon", CountryCode = "FRA", BirthDate = new DateTime(1977, 03, 23, 15, 13, 27), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive =true },
+                new Skier { Id = 9, FirstName = "Davis", LastName = "Taylor", CountryCode = "FRA", BirthDate = new DateTime(1982, 07, 05, 06, 01, 16), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = true },
+                new Skier { Id = 10, FirstName = "Quinn", LastName = "Obrien", CountryCode = "FRA", BirthDate = new DateTime(1997, 07, 07, 04, 17, 04), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = true },
+                new Skier { Id = 11, FirstName = "Malcolm", LastName = "Cantu", CountryCode = "FRA", BirthDate = new DateTime(1981, 05, 25, 0, 17, 38), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = true },
+                new Skier { Id = 12, FirstName = "Marsden", LastName = "Fisher", CountryCode = "FRA", BirthDate = new DateTime(1998, 08, 17, 15, 57, 44), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = true },
+                new Skier { Id = 13, FirstName = "Gray", LastName = "Cannon", CountryCode = "FRA", BirthDate = new DateTime(1977, 03, 23, 15, 13, 27), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = true },
                 new Skier { Id = 16, FirstName = "Amir", LastName = "Love", CountryCode = "GER", BirthDate = new DateTime(1977, 11, 16, 0, 09, 06), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = false },
                 new Skier { Id = 17, FirstName = "Steven", LastName = "Garcia", CountryCode = "GER", BirthDate = new DateTime(1998, 10, 08, 19, 55, 42), Image = null, IsRemoved = false, Gender = Gender.Male, IsActive = false },
 
                 // Female
-                new Skier { Id = 4, FirstName = "Linda", LastName = "Sherman", CountryCode = "AUT", BirthDate = new DateTime(1992, 09, 09, 18, 13, 33), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive =true },
-                new Skier { Id = 5, FirstName = "Isabelle", LastName = "Velez", CountryCode = "AUT", BirthDate = new DateTime(1991, 03, 01, 03, 51, 09), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive =true },
-                new Skier { Id = 6, FirstName = "Cassandra", LastName = "David", CountryCode = "AUT", BirthDate = new DateTime(1990, 09, 20, 04, 01, 15), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive =true },
-                new Skier { Id = 7, FirstName = "Miranda", LastName = "Barrett", CountryCode = "AUT", BirthDate = new DateTime(1993, 05, 31, 0, 49, 38), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive =true },
-                new Skier { Id = 8, FirstName = "Ebony", LastName = "Hensley", CountryCode = "AUT", BirthDate = new DateTime(1990, 07, 17, 18, 20, 11), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive =true },
-                new Skier { Id = 14, FirstName = "Susan", LastName = "Leach", CountryCode = "SUI", BirthDate = new DateTime(1995, 05, 28, 03, 06, 27), Image = null, IsRemoved = true, Gender = Gender.Female, IsActive =true },
+                new Skier { Id = 4, FirstName = "Linda", LastName = "Sherman", CountryCode = "AUT", BirthDate = new DateTime(1992, 09, 09, 18, 13, 33), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive = true },
+                new Skier { Id = 5, FirstName = "Isabelle", LastName = "Velez", CountryCode = "AUT", BirthDate = new DateTime(1991, 03, 01, 03, 51, 09), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive = true },
+                new Skier { Id = 6, FirstName = "Cassandra", LastName = "David", CountryCode = "AUT", BirthDate = new DateTime(1990, 09, 20, 04, 01, 15), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive = true },
+                new Skier { Id = 7, FirstName = "Miranda", LastName = "Barrett", CountryCode = "AUT", BirthDate = new DateTime(1993, 05, 31, 0, 49, 38), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive = true },
+                new Skier { Id = 8, FirstName = "Ebony", LastName = "Hensley", CountryCode = "AUT", BirthDate = new DateTime(1990, 07, 17, 18, 20, 11), Image = null, IsRemoved = false, Gender = Gender.Female, IsActive = true },
+                new Skier { Id = 14, FirstName = "Susan", LastName = "Leach", CountryCode = "SUI", BirthDate = new DateTime(1995, 05, 28, 03, 06, 27), Image = null, IsRemoved = true, Gender = Gender.Female, IsActive = true },
                 new Skier { Id = 15, FirstName = "Riley", LastName = "Roberts", CountryCode = "FRA", BirthDate = new DateTime(1981, 01, 23, 06, 04, 34), Image = null, IsRemoved = true, Gender = Gender.Female, IsActive = true },
             }.ToList();
 
-            Races = new[]
+            this.Races = new[]
             {
                 // Male
                     // NotStarted
@@ -80,35 +80,35 @@ namespace Hurace.Logic.Test
                     new Race { Id = 29, Name = "Alta Badia", Description = null, RaceDate = new DateTime(2019, 12, 23, 13, 15, 0, 0), RaceType = RaceType.SuperG, LocationId = 3, SensorAmount = 5, RaceState = RaceState.Done, Gender = Gender.Female }
             }.ToList();
 
-            Id = 30;
+            this.Id = 30;
 
-            StartLists = new List<StartList>();
-            RaceDatas = new List<RaceData>();
+            this.StartLists = new List<StartList>();
+            this.RaceDatas = new List<RaceData>();
 
-            SetupStartList(raceId: 20, runNumber: 1, skierAmount: 5);
-            SetupStartList(raceId: 21, runNumber: 1, skierAmount: 4);
-            SetupStartList(raceId: 22, runNumber: 1, skierAmount: 6);
-            SetupStartList(raceId: 22, runNumber: 2, skierAmount: 6);
-            SetupStartList(raceId: 23, runNumber: 1, skierAmount: 6);
-            SetupStartList(raceId: 23, runNumber: 2, skierAmount: 6);
+            this.SetupStartList(raceId: 20, runNumber: 1, skierAmount: 5);
+            this.SetupStartList(raceId: 21, runNumber: 1, skierAmount: 4);
+            this.SetupStartList(raceId: 22, runNumber: 1, skierAmount: 6);
+            this.SetupStartList(raceId: 22, runNumber: 2, skierAmount: 6);
+            this.SetupStartList(raceId: 23, runNumber: 1, skierAmount: 6);
+            this.SetupStartList(raceId: 23, runNumber: 2, skierAmount: 6);
 
-            SetupStartList(raceId: 25, runNumber: 1, skierAmount: 5);
-            SetupStartList(raceId: 26, runNumber: 1, skierAmount: 4);
-            SetupStartList(raceId: 26, runNumber: 2, skierAmount: 4);
-            SetupStartList(raceId: 27, runNumber: 1, skierAmount: 6);
-            SetupStartList(raceId: 28, runNumber: 1, skierAmount: 6);
-            SetupStartList(raceId: 29, runNumber: 1, skierAmount: 3);
+            this.SetupStartList(raceId: 25, runNumber: 1, skierAmount: 5);
+            this.SetupStartList(raceId: 26, runNumber: 1, skierAmount: 4);
+            this.SetupStartList(raceId: 26, runNumber: 2, skierAmount: 4);
+            this.SetupStartList(raceId: 27, runNumber: 1, skierAmount: 6);
+            this.SetupStartList(raceId: 28, runNumber: 1, skierAmount: 6);
+            this.SetupStartList(raceId: 29, runNumber: 1, skierAmount: 3);
         }
 
         private void SetupStartList(int raceId, int runNumber, int skierAmount)
         {
-            Race race = Races.Where(r => r.Id == raceId).First();
-            var startLists = Skiers
+            Race race = this.Races.Where(r => r.Id == raceId).First();
+            var startLists = this.Skiers
                 .Where(s => s.Gender == race.Gender)
                 .Take(skierAmount)
                 .Select((skier, i) => new StartList
                 {
-                    Id = Id++,
+                    Id = this.Id++,
                     IsDisqualified = false,
                     RaceId = raceId,
                     RunNumber = (byte)runNumber,
@@ -119,8 +119,8 @@ namespace Hurace.Logic.Test
             DateTime startTime = race.RaceDate;
             foreach (var startList in startLists)
             {
-                StartLists.Add(startList);
-                RaceDatas.AddRange(CreateRaceData(startList.Id, race.SensorAmount, startTime));
+                this.StartLists.Add(startList);
+                this.RaceDatas.AddRange(this.CreateRaceData(startList.Id, race.SensorAmount, startTime));
             }
         }
 
@@ -130,10 +130,10 @@ namespace Hurace.Logic.Test
                 .Range(1, sensorAmount)
                 .Select(i => new RaceData
                 {
-                    Id = Id++,
+                    Id = this.Id++,
                     SensorId = (byte)i,
                     StartListId = startListId,
-                    TimeStamp = (startTime = startTime.AddSeconds(i))
+                    TimeStamp = startTime = startTime.AddSeconds(i)
                 });
         }
     }

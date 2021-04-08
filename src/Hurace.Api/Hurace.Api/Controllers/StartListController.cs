@@ -33,7 +33,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<StartListDto>>> GetStartList(int raceId, int runNumber)
         {
             IEnumerable<StartList> startLists = await this.startListLogic.GetByRaceIdAsync(raceId, runNumber);
-            return Ok(this.mapper.Map<IEnumerable<StartListDto>>(startLists));
+            return this.Ok(this.mapper.Map<IEnumerable<StartListDto>>(startLists));
         }
 
         [HttpPost]
@@ -52,9 +52,9 @@ namespace Hurace.Api.Controllers
             var result = await this.startListLogic.SaveAsync(raceId, runNumber, dbStartList);
 
             return result.Match(
-                success => StatusCode(200, success.Id),
-                validationError => StatusCode(400, validationError.Errors),
-                error => StatusCode(500, error.ErrorCode));
+                success => this.StatusCode(200, success.Id),
+                validationError => this.StatusCode(400, validationError.Errors),
+                error => this.StatusCode(500, error.ErrorCode));
         }
 
         [HttpPost]
@@ -64,18 +64,18 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<StartListDto>>> GenerateStartList(int raceId, int runNumber)
         {
             IEnumerable<StartList> startLists = await this.startListLogic.GenerateStartListForRunAsync(raceId, runNumber);
-            return Ok(this.mapper.Map<IEnumerable<StartListDto>>(startLists));
+            return this.Ok(this.mapper.Map<IEnumerable<StartListDto>>(startLists));
         }
 
         [HttpPut]
         [Route("{id}/run/{isDisqualified}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult> UpdateDisqualified( int id, bool isDisqualified)
+        public async Task<ActionResult> UpdateDisqualified(int id, bool isDisqualified)
         {
             return (await this.startListLogic.UpdateDisqualified(id, isDisqualified))
-                ? StatusCode(200)
-                : StatusCode(400);
+                ? this.StatusCode(200)
+                : this.StatusCode(400);
         }
     }
 }

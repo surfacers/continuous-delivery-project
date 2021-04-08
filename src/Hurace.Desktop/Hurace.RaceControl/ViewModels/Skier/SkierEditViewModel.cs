@@ -16,56 +16,55 @@ namespace Hurace.RaceControl.ViewModels.Skier
         }
 
         public string DisplayName
-            => Original.Id == 0 ? "New Skier" : "Edit Skier";
+            => this.Original.Id == 0 ? "New Skier" : "Edit Skier";
 
         private string firstName;
         public string FirstName
         {
-            get => firstName;
-            set => Set(ref firstName, value);
+            get => this.firstName;
+            set => this.Set(ref this.firstName, value);
         }
 
         private string lastName;
         public string LastName
         {
-            get => lastName;
-            set => Set(ref lastName, value);
+            get => this.lastName;
+            set => this.Set(ref this.lastName, value);
         }
 
         private string countryCode;
         public string CountryCode
         {
-            get => countryCode;
-            set => Set(ref countryCode, value);
+            get => this.countryCode;
+            set => this.Set(ref this.countryCode, value);
         }
 
         private DateTime? birthDate;
         public DateTime? BirthDate
         {
-            get => birthDate;
-            set => Set(ref birthDate, value);
+            get => this.birthDate;
+            set => this.Set(ref this.birthDate, value);
         }
 
         private Gender gender;
         public Gender Gender
         {
-            get => gender;
-            set => Set(ref gender, value);
+            get => this.gender;
+            set => this.Set(ref this.gender, value);
         }
 
         private bool isActive;
         public bool IsActive
         {
-            get => isActive;
-            set => Set(ref isActive, value);
+            get => this.isActive;
+            set => this.Set(ref this.isActive, value);
         }
 
         private string image;
         public string Image
         {
-            get => image;
-            set => Set(ref image, value);
+            get => this.image;
+            set => this.Set(ref this.image, value);
         }
-
     }
 }

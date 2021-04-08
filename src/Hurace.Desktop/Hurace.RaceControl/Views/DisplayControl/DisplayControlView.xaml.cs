@@ -22,7 +22,7 @@ namespace Hurace.RaceControl.Views.DisplayControl
     {
         public DisplayControlView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

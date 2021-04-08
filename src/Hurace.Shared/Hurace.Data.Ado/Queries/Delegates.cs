@@ -5,5 +5,5 @@ using System.Threading.Tasks;
 namespace Hurace.Data.Ado.Queries
 {
     public delegate T RowMapper<T>(IDataRecord row);
-    public delegate Task<R> DbAction<R>(DbCommand command);
+    public delegate Task<T> DbAction<T>(DbCommand command);
 }

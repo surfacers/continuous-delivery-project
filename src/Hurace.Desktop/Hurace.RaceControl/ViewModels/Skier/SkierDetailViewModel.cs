@@ -26,40 +26,42 @@ namespace Hurace.RaceControl.ViewModels.Skier
 
         public SkierDetailViewModel(ISkierViewModel parent)
         {
-            Parent = parent ?? throw new ArgumentNullException();
-            CountryCodes = new ObservableCollection<string>();
-            notificationService = App.Container.Resolve<INotificationService>();
-            locationLogic = App.Container.Resolve<ILocationLogic>();
+            this.Parent = parent ?? throw new ArgumentNullException();
+            this.CountryCodes = new ObservableCollection<string>();
+            this.notificationService = App.Container.Resolve<INotificationService>();
+            this.locationLogic = App.Container.Resolve<ILocationLogic>();
 
-            SaveCommandViewModel = new CommandViewModel(
-                "Save", "Save skier",
-                async () => await Parent.SaveAsync(),
-                () => !Parent.Edit?.HasErrors ?? false);
+            this.SaveCommandViewModel = new CommandViewModel(
+                "Save", 
+                "Save skier",
+                async () => await this.Parent.SaveAsync(),
+                () => !this.Parent.Edit?.HasErrors ?? false);
 
-            SaveCommandViewModel.OnSuccess += () => notificationService.ShowMessage("Saved successfully");
-            SaveCommandViewModel.OnFailure += (ex) => notificationService.ShowMessage("Save failed");
+            this.SaveCommandViewModel.OnSuccess += () => this.notificationService.ShowMessage("Saved successfully");
+            this.SaveCommandViewModel.OnFailure += (ex) => this.notificationService.ShowMessage("Save failed");
 
-            RemoveCommandViewModel = new CommandViewModel(
-                "Remove", "Remove skier",
-                async () => await Parent.RemoveAsync(),
+            this.RemoveCommandViewModel = new CommandViewModel(
+                "Remove", 
+                "Remove skier",
+                async () => await this.Parent.RemoveAsync(),
                 withStyle: ButtonStyle.Flat);
 
-            RemoveCommandViewModel.OnSuccess += () => notificationService.ShowMessage("Removed successfully");
-            RemoveCommandViewModel.OnFailure += (ex) => notificationService.ShowMessage("Remove failed");
+            this.RemoveCommandViewModel.OnSuccess += () => this.notificationService.ShowMessage("Removed successfully");
+            this.RemoveCommandViewModel.OnFailure += (ex) => this.notificationService.ShowMessage("Remove failed");
         }
 
         public async Task OnInitAsync()
         {
-            string countryCode = Parent.Edit?.CountryCode;
+            string countryCode = this.Parent.Edit?.CountryCode;
 
-            var countries = await locationLogic.GetCountriesAsync();
-            CountryCodes.SetItems(countries);
+            var countries = await this.locationLogic.GetCountriesAsync();
+            this.CountryCodes.SetItems(countries);
 
             // Country Code must be reset manually because by calling CountryCodes.SetItems 
             // it gets deleted because its binded as Selected value in view.
-            if (Parent.Edit != null)
+            if (this.Parent.Edit != null)
             {
-                Parent.Edit.CountryCode = CountryCodes.Where(c => c == countryCode).FirstOrDefault();
+                this.Parent.Edit.CountryCode = this.CountryCodes.Where(c => c == countryCode).FirstOrDefault();
             }
         }
     }

@@ -15,7 +15,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetAllAsync_ValidTest()
         {
             // Arrange
-            var locationLogic = GetLocationLogic();
+            var locationLogic = this.GetLocationLogic();
 
             // Act
             var result = (await locationLogic.GetAllAsync()).ToList();
@@ -37,6 +37,6 @@ namespace Hurace.Logic.Test.Logics
         }
 
         private ILocationLogic GetLocationLogic()
-            => new LocationLogic(GetLocationManager());
+            => new LocationLogic(this.GetLocationManager());
     }
 }

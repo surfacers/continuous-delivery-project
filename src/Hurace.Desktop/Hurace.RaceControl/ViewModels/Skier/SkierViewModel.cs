@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Hurace.Core.Logic;
@@ -23,66 +22,66 @@ namespace Hurace.RaceControl.ViewModels.Skier
         private SkierEditViewModel editSkier;
         public SkierEditViewModel Edit
         { 
-            get => editSkier;
-            set => Set(ref editSkier, value);
+            get => this.editSkier;
+            set => this.Set(ref this.editSkier, value);
         }
 
         public SkierViewModel()
         {
-            SkierListViewModel = new SkierListViewModel(this);
-            SkierDetailViewModel = new SkierDetailViewModel(this);
-            Skiers = new FilterViewModel<SkierListItemViewModel>(
+            this.SkierListViewModel = new SkierListViewModel(this);
+            this.SkierDetailViewModel = new SkierDetailViewModel(this);
+            this.Skiers = new FilterViewModel<SkierListItemViewModel>(
                 s => $"{s.CountryCode} {s.FullName}",
-                SkierChanged);
+                this.SkierChanged);
         }
 
         private Task SkierChanged(SkierListItemViewModel skier)
         {
-            Edit = mapper.Map<SkierEditViewModel>(skier.Skier);
+            this.Edit = this.mapper.Map<SkierEditViewModel>(skier.Skier);
             return Task.CompletedTask;
         }
 
         public override async Task OnInitAsync()
         {
-            var skiers = await SkierLogic.GetAllAsync();
+            var skiers = await this.SkierLogic.GetAllAsync();
             var skierViewModels = skiers.Select(s => new SkierListItemViewModel(s)).ToList();
-            Skiers.SetItems(skierViewModels);
+            this.Skiers.SetItems(skierViewModels);
 
-            await SkierDetailViewModel.OnInitAsync();
+            await this.SkierDetailViewModel.OnInitAsync();
         }
 
         public async Task SaveAsync()
         {
-            Models.Skier skier = mapper.Map<Models.Skier>(Edit);
-            var result = await SkierLogic.SaveAsync(skier);
+            Models.Skier skier = this.mapper.Map<Models.Skier>(this.Edit);
+            var result = await this.SkierLogic.SaveAsync(skier);
 
             if (result.IsSuccess)
             {
-                Skiers.Selected.Update(skier);
+                this.Skiers.Selected.Update(skier);
 
-                if (Edit.Original.Id == 0)
+                if (this.Edit.Original.Id == 0)
                 {
-                    Skiers.Add(Skiers.Selected);
+                    this.Skiers.Add(this.Skiers.Selected);
                 }
 
-                Edit.Original = skier;
-                Edit.Raise(nameof(SkierEditViewModel.DisplayName));
+                this.Edit.Original = skier;
+                this.Edit.Raise(nameof(SkierEditViewModel.DisplayName));
             }
         }
 
         public async Task RemoveAsync()
         {
-            bool successful = await SkierLogic.RemoveAsync(Edit.Original.Id);
+            bool successful = await this.SkierLogic.RemoveAsync(this.Edit.Original.Id);
             if (successful)
             {
-                Skiers.RemoveSelected();
-                Edit = null;
+                this.Skiers.RemoveSelected();
+                this.Edit = null;
             }
         }
 
         public Task NewAsync()
         {
-            Skiers.Selected = new SkierListItemViewModel(new Models.Skier());
+            this.Skiers.Selected = new SkierListItemViewModel(new Models.Skier());
             return Task.CompletedTask;
         }
 

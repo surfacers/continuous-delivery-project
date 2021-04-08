@@ -7,15 +7,15 @@ namespace Hurace.Core.Validators
     {
         public RaceValidator()
         {
-            RuleFor(r => r.Id).PrimaryKey();
-            RuleFor(r => r.Name).NotEmpty().Length(2, 50);
-            RuleFor(r => r.Description).MaximumLength(500);
-            RuleFor(r => r.SensorAmount).InclusiveBetween(2, 20);
-            RuleFor(r => r.RaceDate).NotDefaultDateTime();
-            RuleFor(r => r.RaceType).IsInEnum();
-            RuleFor(r => r.LocationId).ForeignKey();
-            RuleFor(r => r.Gender).IsInEnum();
-            RuleFor(r => r.RaceState).IsInEnum();
+            this.RuleFor(r => r.Id).PrimaryKey();
+            this.RuleFor(r => r.Name).NotEmpty().Length(2, 50);
+            this.RuleFor(r => r.Description).MaximumLength(500);
+            this.RuleFor(r => r.SensorAmount).InclusiveBetween(2, 20);
+            this.RuleFor(r => r.RaceDate).NotDefaultDateTime();
+            this.RuleFor(r => r.RaceType).IsInEnum();
+            this.RuleFor(r => r.LocationId).ForeignKey();
+            this.RuleFor(r => r.Gender).IsInEnum();
+            this.RuleFor(r => r.RaceState).IsInEnum();
         }
     }
 }

@@ -7,11 +7,11 @@ namespace Hurace.Core.Validators
     {
         public StartListValidator()
         {
-            RuleFor(r => r.Id).PrimaryKey();
-            RuleFor(r => r.SkierId).ForeignKey();
-            RuleFor(r => r.RaceId).ForeignKey();
-            RuleFor(s => s.StartNumber).GreaterThanOrEqualTo(1);
-            RuleFor(s => s.RunNumber).GreaterThanOrEqualTo((byte)1);
+            this.RuleFor(r => r.Id).PrimaryKey();
+            this.RuleFor(r => r.SkierId).ForeignKey();
+            this.RuleFor(r => r.RaceId).ForeignKey();
+            this.RuleFor(s => s.StartNumber).GreaterThanOrEqualTo(1);
+            this.RuleFor(s => s.RunNumber).GreaterThanOrEqualTo((byte)1);
         }
     }
 }

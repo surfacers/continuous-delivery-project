@@ -9,7 +9,7 @@ namespace Hurace.RaceControl.Views.Race.Detail
     {
         public RaceDetailRunView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

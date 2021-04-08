@@ -19,21 +19,24 @@ namespace Hurace.Api.Hubs
 
         public async Task RunUpdate(LiveStatistic liveStatistic)
         {
-            await this.Clients.All.SendAsync("OnRunUpdate",
-                mapper.Map<LiveStatisticDto>(liveStatistic));
+            await this.Clients.All.SendAsync(
+                "OnRunUpdate",
+                this.mapper.Map<LiveStatisticDto>(liveStatistic));
         }
 
         public async Task CurrentRunChange(LiveStatistic liveStatistic)
         {
-            await this.Clients.All.SendAsync("OnCurrentRunChange", 
-                mapper.Map<LiveStatisticDto>(liveStatistic));
+            await this.Clients.All.SendAsync(
+                "OnCurrentRunChange", 
+                this.mapper.Map<LiveStatisticDto>(liveStatistic));
         }
 
         public async Task RunStopped(string reason, LiveStatistic liveStatistic)
         {
-            await this.Clients.All.SendAsync("OnRunStopped", 
+            await this.Clients.All.SendAsync(
+                "OnRunStopped", 
                 reason,
-                mapper.Map<LiveStatisticDto>(liveStatistic));
+                this.mapper.Map<LiveStatisticDto>(liveStatistic));
         }
     }
 }

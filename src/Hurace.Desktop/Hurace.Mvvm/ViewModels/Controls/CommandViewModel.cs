@@ -11,10 +11,9 @@ namespace Hurace.Mvvm.ViewModels.Controls
         private string content;
         public string Content
         {
-            get => content;
-            set => Set(ref content, value);
+            get => this.content;
+            set => this.Set(ref this.content, value);
         }
-
 
         public string ToolTip { get; }
 
@@ -25,10 +24,9 @@ namespace Hurace.Mvvm.ViewModels.Controls
         private Func<bool> showCommand;
         public Func<bool> ShowCommand
         {
-            get => showCommand;
-            set => Set(ref showCommand, value);
+            get => this.showCommand;
+            set => this.Set(ref this.showCommand, value);
         }
-
 
         public event Action OnSuccess;
 
@@ -42,26 +40,26 @@ namespace Hurace.Mvvm.ViewModels.Controls
             Func<bool> show = null,
             ButtonStyle withStyle = ButtonStyle.Raised)
         {
-            Content = content;
-            ToolTip = toolTip;
-            ButtonStyle = withStyle;
+            this.Content = content;
+            this.ToolTip = toolTip;
+            this.ButtonStyle = withStyle;
 
-            ShowCommand = show != null 
+            this.ShowCommand = show != null 
                 ? show 
                 : () => true;
 
-            ActionCommand = new AsyncDelegateCommand(
+            this.ActionCommand = new AsyncDelegateCommand(
                 async () =>
                 {
                     try
                     {
                         await execute();
-                        OnSuccess?.Invoke();
+                        this.OnSuccess?.Invoke();
                         CommandManager.InvalidateRequerySuggested();
                     }
                     catch (Exception ex)
                     {
-                        OnFailure?.Invoke(ex);
+                        this.OnFailure?.Invoke(ex);
 #if DEBUG
                         throw ex;
 #endif

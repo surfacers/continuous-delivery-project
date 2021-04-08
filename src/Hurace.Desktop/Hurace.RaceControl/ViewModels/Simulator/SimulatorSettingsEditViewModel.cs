@@ -19,15 +19,15 @@ namespace Hurace.RaceControl.ViewModels.Simulator
         private readonly IMapper mapper;
         private readonly IClockService clockService;
 
-        private SimulatedRaceClock raceClock => (SimulatedRaceClock)clockService.RaceClock;
+        private SimulatedRaceClock raceClock => (SimulatedRaceClock)this.clockService.RaceClock;
 
         public ClockSettingsEditViewModel Edit { get; set; }
 
         private bool isEnabled;
         public bool IsEnabled
         {
-            get => isEnabled;
-            set => Set(ref isEnabled, value);
+            get => this.isEnabled;
+            set => this.Set(ref this.isEnabled, value);
         }
 
         public CommandViewModel StartCommandViewModel { get; }
@@ -39,45 +39,47 @@ namespace Hurace.RaceControl.ViewModels.Simulator
 
         public SimulatorSettingsEditViewModel()
         {
-            mapper = App.Container.Resolve<IMapper>();
-            Edit = mapper.Map<ClockSettingsEditViewModel>(ClockSettings.GetDefaultSettings());
+            this.mapper = App.Container.Resolve<IMapper>();
+            this.Edit = this.mapper.Map<ClockSettingsEditViewModel>(ClockSettings.GetDefaultSettings());
 
-            StartCommandViewModel = new CommandViewModel(
-                "Start", "Start timer",
-                () => Start(),
-                () => CanStart());
+            this.StartCommandViewModel = new CommandViewModel(
+                "Start", 
+                "Start timer",
+                () => this.Start(),
+                () => this.CanStart());
 
-            StopCommandViewModel = new CommandViewModel(
-                "Stop", "Stop timer",
-                () => Stop(),
-                () => CanStop());
+            this.StopCommandViewModel = new CommandViewModel(
+                "Stop", 
+                "Stop timer",
+                () => this.Stop(),
+                () => this.CanStop());
             
-            clockService = App.Container.Resolve<IClockService>();
-            clockService.OnRunUpdate += OnValidUpdate;
-            clockService.OnInvalid += OnInvalidUpdate;
+            this.clockService = App.Container.Resolve<IClockService>();
+            this.clockService.OnRunUpdate += this.OnValidUpdate;
+            this.clockService.OnInvalid += this.OnInvalidUpdate;
 
-            IsEnabled = !raceClock.IsRunning;
+            this.IsEnabled = !this.raceClock.IsRunning;
         }      
 
-        private bool CanStart() => !raceClock.IsRunning && !Edit.HasErrors;
+        private bool CanStart() => !this.raceClock.IsRunning && !this.Edit.HasErrors;
         private Task Start()
         {
-            IsEnabled = false;
-            Logs.Clear();
+            this.IsEnabled = false;
+            this.Logs.Clear();
 
-            var settings = mapper.Map<ClockSettings>(Edit);
-            Edit.Original = settings;
+            var settings = this.mapper.Map<ClockSettings>(this.Edit);
+            this.Edit.Original = settings;
 
-            raceClock.Start(settings);
+            this.raceClock.Start(settings);
 
             return Task.CompletedTask;
         }
 
-        private bool CanStop() => raceClock.IsRunning;
+        private bool CanStop() => this.raceClock.IsRunning;
         private Task Stop()
         {
-            IsEnabled = true;
-            raceClock.Stop();
+            this.IsEnabled = true;
+            this.raceClock.Stop();
 
             return Task.CompletedTask;
         }
@@ -85,10 +87,16 @@ namespace Hurace.RaceControl.ViewModels.Simulator
         private void OnValidUpdate(Core.Models.RaceData raceData)
         {
             string message = string.Empty;
-            if (raceData.SensorId == 1) message = "START";
-            if (raceData.SensorId == Edit.SensorAmount) message = "END";
+            if (raceData.SensorId == 1)
+            {
+                message = "START";
+            }
+            else if (raceData.SensorId == this.Edit.SensorAmount)
+            {
+                message = "END";
+            }
 
-            Log(raceData.SensorId, raceData.TimeStamp, message);
+            this.Log(raceData.SensorId, raceData.TimeStamp, message);
         }
 
         private void OnInvalidUpdate(InvalidRaceDataReason reason, int sensorId, DateTime time)
@@ -102,13 +110,13 @@ namespace Hurace.RaceControl.ViewModels.Simulator
                 _ => string.Empty
             };
 
-            Log(sensorId, time, message, isValid: false);
+            this.Log(sensorId, time, message, isValid: false);
         }
 
         private void Log(int sensorId, DateTime time, string message, bool isValid = true)
         {
             string valid = isValid ? string.Empty : "[NOT VALID]";
-            Dispatcher.Invoke(() => Logs.Insert(0, $"{sensorId} {time.ToLongTimeString()} {valid} {message}"));
+            this.Dispatcher.Invoke(() => this.Logs.Insert(0, $"{sensorId} {time.ToLongTimeString()} {valid} {message}"));
         }
     }
 }
