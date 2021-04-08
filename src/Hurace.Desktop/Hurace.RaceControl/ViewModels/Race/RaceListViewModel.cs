@@ -15,16 +15,18 @@ namespace Hurace.RaceControl.ViewModels.Race
 
         public RaceListViewModel(IRaceViewModel parent)
         {
-            Parent = parent ?? throw new ArgumentNullException();
+            this.Parent = parent ?? throw new ArgumentNullException();
 
-            NewCommandViewModel = new CommandViewModel(
-                "New", "Create a new race",
-                () => Parent.NewAsync());
+            this.NewCommandViewModel = new CommandViewModel(
+                "New", 
+                "Create a new race",
+                () => this.Parent.NewAsync());
 
-            StopRaceCommandViewModel = new CommandViewModel(
-                "Stop race", "Stop race",
-                () => Parent.StopRaceAsync(),
-                () => Parent.CanStopRaceAsync(),
+            this.StopRaceCommandViewModel = new CommandViewModel(
+                "Stop race", 
+                "Stop race",
+                () => this.Parent.StopRaceAsync(),
+                () => this.Parent.CanStopRaceAsync(),
                 withStyle: ButtonStyle.Flat);
         }
     }

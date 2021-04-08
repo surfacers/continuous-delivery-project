@@ -16,7 +16,8 @@ namespace Hurace.RaceControl.Extensions
 
         internal enum DragDropSource
         {
-            Source, Target
+            Source,
+            Target
         }
 
         internal static DragDropAction<T> GetDragDropAction<T>(this IDropInfo dropInfo, Func<T, bool> inSource)
@@ -25,7 +26,10 @@ namespace Hurace.RaceControl.Extensions
             var sourceItem = dropInfo.Data as T;
             var targetItem = dropInfo.TargetItem as T;
 
-            if (sourceItem == null || targetItem == null) return null;
+            if (sourceItem == null || targetItem == null)
+            {
+                return null;
+            }
 
             return new DragDropAction<T>
             {

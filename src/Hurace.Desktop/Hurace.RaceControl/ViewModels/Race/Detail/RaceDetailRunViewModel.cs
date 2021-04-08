@@ -20,19 +20,18 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
         [Dependency] public INotificationService NotificationService { get; set; }
         [Dependency] public IClockService ClockService { get; set; }
 
-        private int runNumber => (int)RouteData;
-        private Models.Race race => Parent.Races.Selected.Race;
+        private int runNumber => (int)this.RouteData;
+        private Models.Race race => this.Parent.Races.Selected.Race;
 
         private bool notStartedYet = false;
         public bool NotStartedYet 
         {
-            get => notStartedYet;
-            set => Set(ref notStartedYet, value);
+            get => this.notStartedYet;
+            set => this.Set(ref this.notStartedYet, value);
         }
 
         public ObservableCollection<StartListItemViewModel> StartList
-            => runNumber == 1 ? Parent.StartList1 : Parent.StartList2;
-        
+            => this.runNumber == 1 ? this.Parent.StartList1 : this.Parent.StartList2;
 
         public CommandViewModel GrantRunCommandViewModel { get; }
         public CommandViewModel DisqualifyCommandViewModel { get; }
@@ -40,46 +39,52 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
 
         public RaceDetailRunViewModel()
         {
-            GrantRunCommandViewModel = new CommandViewModel(
-                "Grant next run", "Grant next run in start list",
-                async () => await Parent.GrantRunAsync(),
-                () => Parent.Races.Selected != null 
-                   && StartList.Any(d => d.StartListState == Enums.StartListState.NotStarted)
-                   && race.RaceState == Enums.RaceState.Running
-                   && !ClockService.IsListening);
-            
-            DisqualifyCommandViewModel = new CommandViewModel(
-                "Disqualify", "Disqualify selected skier",
-                async () => await Parent.DisqualifyAsync(),
-                () => Parent.SelectedStartListItem != null && !Parent.SelectedStartListItem.IsDisqualified,
+            this.GrantRunCommandViewModel = new CommandViewModel(
+                "Grant next run", 
+                "Grant next run in start list",
+                async () => await this.Parent.GrantRunAsync(),
+                () => this.Parent.Races.Selected != null 
+                   && this.StartList.Any(d => d.StartListState == Enums.StartListState.NotStarted)
+                   && this.race.RaceState == Enums.RaceState.Running
+                   && !this.ClockService.IsListening);
+
+            this.DisqualifyCommandViewModel = new CommandViewModel(
+                "Disqualify", 
+                "Disqualify selected skier",
+                async () => await this.Parent.DisqualifyAsync(),
+                () => this.Parent.SelectedStartListItem != null && !this.Parent.SelectedStartListItem.IsDisqualified,
                 withStyle: ButtonStyle.Flat);
 
-            DisqualifyCommandViewModel.OnSuccess += () => NotificationService.ShowMessage("Disqualified successfully");
-            DisqualifyCommandViewModel.OnFailure += (ex) => NotificationService.ShowMessage("Disqualified failed");
+            this.DisqualifyCommandViewModel.OnSuccess += () => this.NotificationService.ShowMessage("Disqualified successfully");
+            this.DisqualifyCommandViewModel.OnFailure += (ex) => this.NotificationService.ShowMessage("Disqualified failed");
 
-            StartNextRunCommandViewModel = new CommandViewModel(
-                "Generate start list", "Generate start list for second run",
-                async () => await GenerateStartListForNextRunAsync(),
-                () => !Parent.StartList1.Any(s => s.StartListState == Enums.StartListState.NotStarted));
+            this.StartNextRunCommandViewModel = new CommandViewModel(
+                "Generate start list", 
+                "Generate start list for second run",
+                async () => await this.GenerateStartListForNextRunAsync(),
+                () => !this.Parent.StartList1.Any(s => s.StartListState == Enums.StartListState.NotStarted));
         }
 
         public override Task OnInitAsync()
         {
-            if (runNumber < 1 && runNumber > 2) throw new ArgumentException($"RunNumber {runNumber} not supported!");
+            if (this.runNumber < 1 && this.runNumber > 2)
+            {
+                throw new ArgumentException($"RunNumber {this.runNumber} not supported!");
+            }
 
-            NotStartedYet = StartList.Count == 0;
+            this.NotStartedYet = this.StartList.Count == 0;
 
             return Task.CompletedTask;
         }
 
         private async Task GenerateStartListForNextRunAsync()
         {
-            var startList = await StartListLogic.GenerateStartListForRunAsync(race.Id, runNumber);
-            NotStartedYet = startList.Count() == 0;
+            var startList = await this.StartListLogic.GenerateStartListForRunAsync(this.race.Id, this.runNumber);
+            this.NotStartedYet = startList.Count() == 0;
 
-            var startListViewModels = startList.Select(s => Parent.ToStartListItemViewModel(s)).ToList();
-            StartList.SetItems(startListViewModels);
-            Parent.StartList2.SetItems(startListViewModels);
+            var startListViewModels = startList.Select(s => this.Parent.ToStartListItemViewModel(s)).ToList();
+            this.StartList.SetItems(startListViewModels);
+            this.Parent.StartList2.SetItems(startListViewModels);
         }
 
         public override Task OnDestroyAsync()

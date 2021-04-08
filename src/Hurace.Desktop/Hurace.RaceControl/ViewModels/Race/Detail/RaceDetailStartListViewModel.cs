@@ -21,7 +21,7 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
 {
     public class RaceDetailStartListViewModel : TabViewModel<IRaceViewModel>, IDropTarget
     {
-        private int raceId => Parent.Races.Selected.Race.Id;
+        private int raceId => this.Parent.Races.Selected.Race.Id;
 
         [Dependency] public INotificationService NotificationService { get; set; }
 
@@ -34,39 +34,41 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
 
         public RaceDetailStartListViewModel()
         {
-            Skiers = new FilterViewModel<StartListItemViewModel>(
+            this.Skiers = new FilterViewModel<StartListItemViewModel>(
                 s => $"{s.CountryCode} {s.FullName}");
 
-            AddCommand = new DelegateParameterCommand<StartListItemViewModel>(
-                skier => Add(skier, Parent.StartList1.Count),
-                _ => CanAdd());
+            this.AddCommand = new DelegateParameterCommand<StartListItemViewModel>(
+                skier => this.Add(skier, this.Parent.StartList1.Count),
+                _ => this.CanAdd());
 
-            RemoveCommand = new DelegateParameterCommand<StartListItemViewModel>(
-                skier => Remove(skier));
+            this.RemoveCommand = new DelegateParameterCommand<StartListItemViewModel>(
+                skier => this.Remove(skier));
 
-            StartRaceCommandViewModel = new CommandViewModel(
-                "Start Race", "Start selected race",
-                async () => await Parent.StartRaceAsync(),
-                () => Parent.StartList1.Count >= Settings.DefaultSettings.MinSkierAmount,
+            this.StartRaceCommandViewModel = new CommandViewModel(
+                "Start Race", 
+                "Start selected race",
+                async () => await this.Parent.StartRaceAsync(),
+                () => this.Parent.StartList1.Count >= Settings.DefaultSettings.MinSkierAmount,
                 withStyle: ButtonStyle.Flat);
 
-            StartRaceCommandViewModel.OnSuccess += () => NotificationService.ShowMessage("Race started successfully");
-            StartRaceCommandViewModel.OnFailure += ex => NotificationService.ShowMessage("Race start failed");
+            this.StartRaceCommandViewModel.OnSuccess += () => this.NotificationService.ShowMessage("Race started successfully");
+            this.StartRaceCommandViewModel.OnFailure += ex => this.NotificationService.ShowMessage("Race start failed");
 
-            SaveCommandViewModel = new CommandViewModel(
-                "Save", "Save start list",
-                async () => await Parent.SaveAsync(Parent.StartList1));
+            this.SaveCommandViewModel = new CommandViewModel(
+                "Save", 
+                "Save start list",
+                async () => await this.Parent.SaveAsync(this.Parent.StartList1));
 
-            SaveCommandViewModel.OnSuccess += () => NotificationService.ShowMessage("Race saved successfully");
-            SaveCommandViewModel.OnFailure += ex => NotificationService.ShowMessage("Save failed");
+            this.SaveCommandViewModel.OnSuccess += () => this.NotificationService.ShowMessage("Race saved successfully");
+            this.SaveCommandViewModel.OnFailure += ex => this.NotificationService.ShowMessage("Save failed");
         }
 
         public override Task OnInitAsync()
         {
-            Gender gender = Parent.Races.Selected.Gender;
-            var skiers = Parent.AllSkiers.Where(s => s.Gender == gender && s.IsActive);
-            var skierViewModels = GetSkiers(Parent.StartList1, skiers);
-            Skiers.SetItems(skierViewModels);
+            Gender gender = this.Parent.Races.Selected.Gender;
+            var skiers = this.Parent.AllSkiers.Where(s => s.Gender == gender && s.IsActive);
+            var skierViewModels = this.GetSkiers(this.Parent.StartList1, skiers);
+            this.Skiers.SetItems(skierViewModels);
 
             return Task.CompletedTask;
         }
@@ -84,7 +86,7 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
                     var startList = new Core.Models.StartList
                     {
                         Id = 0,
-                        RaceId = raceId,
+                        RaceId = this.raceId,
                         RunNumber = 1,
                         SkierId = skier.Id,
                         StartNumber = -1,
@@ -96,52 +98,55 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
                 .ToList();
         }
 
-        private bool CanAdd() => Parent.StartList1.Count < Settings.DefaultSettings.MaxSkierAmount;
+        private bool CanAdd() => this.Parent.StartList1.Count < Settings.DefaultSettings.MaxSkierAmount;
         private void Add(StartListItemViewModel skier, int newIndex)
         {
-            Parent.StartList1.Insert(newIndex, skier);
-            UpdateStartNumbers();
+            this.Parent.StartList1.Insert(newIndex, skier);
+            this.UpdateStartNumbers();
 
-            Skiers.Remove(skier);
+            this.Skiers.Remove(skier);
         }
 
         private void Remove(StartListItemViewModel skier)
         {
-            Parent.StartList1.Remove(skier);
-            UpdateStartNumbers();
+            this.Parent.StartList1.Remove(skier);
+            this.UpdateStartNumbers();
 
-            Skiers.Add(skier);
+            this.Skiers.Add(skier);
         }
 
         private void Move(StartListItemViewModel skier, int newIndex)
         {
-            Parent.StartList1.Remove(skier);
-            Parent.StartList1.Insert(newIndex, skier);
-            UpdateStartNumbers();
+            this.Parent.StartList1.Remove(skier);
+            this.Parent.StartList1.Insert(newIndex, skier);
+            this.UpdateStartNumbers();
         }
 
         private void UpdateStartNumbers()
         {
-            for (int i = 0; i < Parent.StartList1.Count; i++)
+            for (int i = 0; i < this.Parent.StartList1.Count; i++)
             {
-                Parent.StartList1[i].StartList.StartNumber = i + 1;
-                Parent.StartList1[i].Raise(nameof(StartListItemViewModel.StartNumber));
+                this.Parent.StartList1[i].StartList.StartNumber = i + 1;
+                this.Parent.StartList1[i].Raise(nameof(StartListItemViewModel.StartNumber));
             }
         }
 
         public void DragOver(IDropInfo dropInfo)
         {
             DragDropAction<StartListItemViewModel> action
-                = dropInfo.GetDragDropAction<StartListItemViewModel>(inSource: s => Skiers.Data.Contains(s));
+                = dropInfo.GetDragDropAction<StartListItemViewModel>(inSource: s => this.Skiers.Data.Contains(s));
 
-            if (action == null) return;
+            if (action == null)
+            {
+                return;
+            }
 
             switch (action.Drag, action.Drop)
             {
                 case (DragDropSource.Target, DragDropSource.Target): dropInfo.Effects = DragDropEffects.Move; break;
                 case (DragDropSource.Target, DragDropSource.Source): dropInfo.Effects = DragDropEffects.Copy; break;
                 case (DragDropSource.Source, DragDropSource.Target):
-                    dropInfo.Effects = CanAdd() ? DragDropEffects.Copy : DragDropEffects.None;
+                    dropInfo.Effects = this.CanAdd() ? DragDropEffects.Copy : DragDropEffects.None;
                     break;
                 default: dropInfo.Effects = DragDropEffects.None; break;
             }
@@ -152,15 +157,18 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
         public void Drop(IDropInfo dropInfo)
         {
             DragDropAction<StartListItemViewModel> action 
-                = dropInfo.GetDragDropAction<StartListItemViewModel>(inSource: s => Skiers.Data.Contains(s));
+                = dropInfo.GetDragDropAction<StartListItemViewModel>(inSource: s => this.Skiers.Data.Contains(s));
 
-            if (action == null) return;
+            if (action == null)
+            {
+                return;
+            }
 
             switch (action.Drag, action.Drop)
             {
-                case (DragDropSource.Target, DragDropSource.Target): Move(action.Item, dropInfo.GetIndex()); break;
-                case (DragDropSource.Target, DragDropSource.Source): Remove(action.Item); break;
-                case (DragDropSource.Source, DragDropSource.Target): Add(action.Item, dropInfo.GetIndex()); break;
+                case (DragDropSource.Target, DragDropSource.Target): this.Move(action.Item, dropInfo.GetIndex()); break;
+                case (DragDropSource.Target, DragDropSource.Source): this.Remove(action.Item); break;
+                case (DragDropSource.Source, DragDropSource.Target): this.Add(action.Item, dropInfo.GetIndex()); break;
                 default: throw new NotImplementedException();
             }
         }

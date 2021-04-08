@@ -14,32 +14,35 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
         private StartListItemViewModel currentRun;
         public StartListItemViewModel CurrentRun
         {
-            get => currentRun;
-            set => Set(ref currentRun, value);
+            get => this.currentRun;
+            set => this.Set(ref this.currentRun, value);
         }
 
         public LiveViewModel()
         {
-            clockService = App.Container.Resolve<IClockService>();
-            CurrentRun = clockService.CurrentRun;
+            this.clockService = App.Container.Resolve<IClockService>();
+            this.CurrentRun = this.clockService.CurrentRun;
         }
 
         private void OnCurrentRunChange(StartListItemViewModel run)
         {
-            if (run == null) return;
+            if (run == null)
+            {
+                return;
+            }
 
-            CurrentRun = run;
+            this.CurrentRun = run;
         }
 
         public Task OnInitAsync()
         {
-            clockService.OnCurrentRunChange += OnCurrentRunChange;
+            this.clockService.OnCurrentRunChange += this.OnCurrentRunChange;
             return Task.CompletedTask;
         }
 
         public Task OnDestroyAsync()
         {
-            clockService.OnCurrentRunChange -= OnCurrentRunChange;
+            this.clockService.OnCurrentRunChange -= this.OnCurrentRunChange;
             return Task.CompletedTask;
         }
     }

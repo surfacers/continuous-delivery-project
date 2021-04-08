@@ -33,15 +33,15 @@ namespace Hurace.RaceControl.Services.Impl
         private IRaceClock raceClock;
         public IRaceClock RaceClock
         {
-            get => raceClock;
+            get => this.raceClock;
             set
             {
-                StopListen();
-                raceClock = value;
+                this.StopListen();
+                this.raceClock = value;
 
-                if (raceClock != null)
+                if (this.raceClock != null)
                 {
-                    RaceClock.TimingTriggered += TimingTriggered;
+                    this.RaceClock.TimingTriggered += this.TimingTriggered;
                 }
             }
         }
@@ -52,11 +52,11 @@ namespace Hurace.RaceControl.Services.Impl
         private StartListItemViewModel currentRun;
         public StartListItemViewModel CurrentRun
         {
-            get => currentRun;
+            get => this.currentRun;
             set
             {
-                currentRun = value;
-                OnCurrentRunChange?.Invoke(value);
+                this.currentRun = value;
+                this.OnCurrentRunChange?.Invoke(value);
             }
         }
 
@@ -68,8 +68,8 @@ namespace Hurace.RaceControl.Services.Impl
         private bool isListening = false;
         public bool IsListening
         {
-            get => isListening;
-            private set => Set(ref isListening, value);
+            get => this.isListening;
+            private set => this.Set(ref this.isListening, value);
         }
 
         public void StartListen(
@@ -79,65 +79,65 @@ namespace Hurace.RaceControl.Services.Impl
         {
             lock (this)
             {
-                StopListen();
-                IsListening = true;
-                HasStarted = false;
+                this.StopListen();
+                this.IsListening = true;
+                this.HasStarted = false;
 
-                RaceId = raceId;
+                this.RaceId = raceId;
                 this.sensorAmount = sensorAmount;
-                CurrentRun = currentRun;
+                this.CurrentRun = currentRun;
             }
         }
 
         public IEnumerable<RaceData> Resume()
-            => CurrentRunData;
+            => this.CurrentRunData;
 
         public void StopListen()
         {
-            CurrentRun = null;
-            RaceId = -1;
-            CurrentRunData.Clear();
-            HasStarted = false;
-            IsListening = false;
+            this.CurrentRun = null;
+            this.RaceId = -1;
+            this.CurrentRunData.Clear();
+            this.HasStarted = false;
+            this.IsListening = false;
         }
 
         private void TimingTriggered(int sensorId, DateTime time)
         {
             // Check if access was granted
-            if (!IsListening)
+            if (!this.IsListening)
             {
-                OnInvalid?.Invoke(InvalidRaceDataReason.NotGranted, sensorId, time);
+                this.OnInvalid?.Invoke(InvalidRaceDataReason.NotGranted, sensorId, time);
                 return;
             }
 
             // Not enough time was between
-            DateTime? lastTime = CurrentRunData.LastOrDefault()?.TimeStamp;
-            if (lastTime != null && (time - (DateTime)lastTime) < deltaTime)
+            DateTime? lastTime = this.CurrentRunData.LastOrDefault()?.TimeStamp;
+            if (lastTime != null && (time - (DateTime)lastTime) < this.deltaTime)
             {
-                OnInvalid?.Invoke(InvalidRaceDataReason.NotEnoughTimeBetween, sensorId, time);
+                this.OnInvalid?.Invoke(InvalidRaceDataReason.NotEnoughTimeBetween, sensorId, time);
                 return;
             }
 
-            if (sensorId < 0 || sensorId >= sensorAmount || (HasStarted && sensorId <= lastSensorId))
+            if (sensorId < 0 || sensorId >= this.sensorAmount || (this.HasStarted && sensorId <= this.lastSensorId))
             {
-                OnInvalid?.Invoke(InvalidRaceDataReason.NotInSensorRange, sensorId, time);
+                this.OnInvalid?.Invoke(InvalidRaceDataReason.NotInSensorRange, sensorId, time);
                 return;
             }
 
             // Start
             if (sensorId == 0)
             {
-                HasStarted = true;
+                this.HasStarted = true;
             }
 
-            if (!HasStarted)
+            if (!this.HasStarted)
             {
-                OnInvalid?.Invoke(InvalidRaceDataReason.NotStartedYet, sensorId, time);
+                this.OnInvalid?.Invoke(InvalidRaceDataReason.NotStartedYet, sensorId, time);
                 return;
             }
 
-            lastSensorId = sensorId;
-            HandleValidTimingTriggered(sensorId, time);
+            this.lastSensorId = sensorId;
+            this.HandleValidTimingTriggered(sensorId, time);
         }
 
         private void HandleValidTimingTriggered(int sensorId, DateTime time)
@@ -148,30 +148,30 @@ namespace Hurace.RaceControl.Services.Impl
             {
                 Id = 0,
                 SensorId = (byte)(sensorId + 1), // is 1-based in database but 0-based in IRaceTimer
-                StartListId = CurrentRun.StartList.Id,
+                StartListId = this.CurrentRun.StartList.Id,
                 TimeStamp = time
             };
 
-            CurrentRunData.Add(raceData);
-            OnRunUpdate?.Invoke(raceData);
+            this.CurrentRunData.Add(raceData);
+            this.OnRunUpdate?.Invoke(raceData);
 
             // End
-            if (sensorId == (sensorAmount - 1))
+            if (sensorId == (this.sensorAmount - 1))
             {
-                Task.WaitAll(SaveRaceData());
+                Task.WaitAll(this.SaveRaceData());
 
                 lock (this)
                 {
-                    Task.WaitAll(OnRunFinish?.Invoke(CurrentRun.StartList.Id) ?? Task.CompletedTask);
+                    Task.WaitAll(this.OnRunFinish?.Invoke(this.CurrentRun.StartList.Id) ?? Task.CompletedTask);
                 }
 
-                StopListen();
+                this.StopListen();
             }
         }
 
         private async Task SaveRaceData()
         {
-            bool successful = await raceDataLogic.CreateAsync(CurrentRun.RaceData.Select(s => s.RaceData));
+            bool successful = await this.raceDataLogic.CreateAsync(this.CurrentRun.RaceData.Select(s => s.RaceData));
             if (!successful)
             {
                 this.notificationService.ShowMessage("Save race data failed!");

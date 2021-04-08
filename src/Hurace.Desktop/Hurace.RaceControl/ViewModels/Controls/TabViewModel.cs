@@ -17,34 +17,35 @@ namespace Hurace.RaceControl.ViewModels.Controls
         private bool isLoading;
         public bool IsLoading
         {
-            get => isLoading;
-            set => Set(ref isLoading, value);
+            get => this.isLoading;
+            set => this.Set(ref this.isLoading, value);
         }
 
         private bool connectionError;
         public bool ConnectionError
         {
-            get => connectionError;
-            set => Set(ref connectionError, value);
+            get => this.connectionError;
+            set => this.Set(ref this.connectionError, value);
         }
 
         public async void OnInit()
         {
-            ConnectionError = false;
-            IsLoading = true;
+            this.ConnectionError = false;
+            this.IsLoading = true;
             try
             {
-                await OnInitAsync();
+                await this.OnInitAsync();
             } 
-            catch (Exception ex)
+            catch (Exception)
             {
-                IsLoading = false;
-                ConnectionError = true;
+                this.IsLoading = false;
+                this.ConnectionError = true;
 #if DEBUG
                 throw ex;
 #endif
             }
-            IsLoading = false;
+
+            this.IsLoading = false;
         }
 
         public abstract Task OnInitAsync();
@@ -52,4 +53,3 @@ namespace Hurace.RaceControl.ViewModels.Controls
         public abstract Task OnDestroyAsync();
     }
 }
-

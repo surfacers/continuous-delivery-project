@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Combined" ToolsVersion="14.0">
+<RuleSet Name="Combined" ToolsVersion="16.0">
   <Include Path="minimumrecommendedrules.ruleset" Action="Default" />
   <Include Path="securityrules.ruleset" Action="Default" />
   <Include Path="stylecop.analyzers.ruleset" Action="Default" />
+  <Rules AnalyzerId="StyleCop.Analyzers" RuleNamespace="StyleCop.Analyzers">
+    <Rule Id="SA1134" Action="None" />
+    <Rule Id="SA1503" Action="Error" />
+  </Rules>
 </RuleSet>

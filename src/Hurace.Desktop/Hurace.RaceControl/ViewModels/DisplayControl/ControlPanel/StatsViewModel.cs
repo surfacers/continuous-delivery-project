@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Hurace.Core.Logic;
-using Hurace.Core.Models;
-using Hurace.RaceControl.Services;
-using Unity;
-using Models = Hurace.Core.Models;
 using Hurace.Core.Extensions;
+using Hurace.Core.Logic;
 using Hurace.Mvvm;
 using Hurace.Mvvm.ViewModels;
+using Hurace.RaceControl.Services;
 using Hurace.RaceControl.ViewModels.Race;
-using Hurace.Core.Logic.Models;
+using Unity;
+using Models = Hurace.Core.Models;
 
 namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
 {
@@ -22,7 +19,7 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
         private readonly IClockService clockService;
 
         private readonly int runNumber;
-        private Models.Race race => Parent.Races.Selected.Race;
+        private Models.Race race => this.Parent.Races.Selected.Race;
 
         public ObservableCollection<StatsItemViewModel> Stats { get; set; }
             = new ObservableCollection<StatsItemViewModel>();
@@ -34,35 +31,38 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
         private bool isLoading;
         public bool IsLoading
         {
-            get => isLoading;
-            set => Set(ref isLoading, value);
+            get => this.isLoading;
+            set => this.Set(ref this.isLoading, value);
         }
 
         public StatsViewModel(IRaceViewModel parent, int run)
         {
-            if (run < 1 || run > 2) throw new ArgumentNullException(nameof(run));
+            if (run < 1 || run > 2)
+            {
+                throw new ArgumentNullException(nameof(run));
+            }
 
-            statisticLogic = App.Container.Resolve<IStatisticLogic>();
-            clockService = App.Container.Resolve<IClockService>();
+            this.statisticLogic = App.Container.Resolve<IStatisticLogic>();
+            this.clockService = App.Container.Resolve<IClockService>();
 
-            Parent = parent ?? throw new ArgumentNullException();
-            runNumber = run;
+            this.Parent = parent ?? throw new ArgumentNullException();
+            this.runNumber = run;
         }
 
         public async Task OnInitAsync()
         {
-            var runText = runNumber == 1 ? "First" : "Second";
-            RaceTitle = race.RaceType + " " + race.Gender + " (" + race.Name + " (" + runText + " run))";
-            clockService.OnRunFinish += _ => LoadStats();
+            var runText = this.runNumber == 1 ? "First" : "Second";
+            this.RaceTitle = this.race.RaceType + " " + this.race.Gender + " (" + this.race.Name + " (" + runText + " run))";
+            this.clockService.OnRunFinish += _ => this.LoadStats();
 
-            IsLoading = true;
-            await LoadStats();
-            IsLoading = false;
+            this.IsLoading = true;
+            await this.LoadStats();
+            this.IsLoading = false;
         }
 
         public Task OnDestroyAsync()
         {
-            clockService.OnRunFinish -= _ => LoadStats();
+            this.clockService.OnRunFinish -= _ => this.LoadStats();
             return Task.CompletedTask;
         }
 
@@ -70,14 +70,14 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
         {
             Models.Skier GetSkierById(int id)
             {
-                return Parent.AllSkiers.FirstOrDefault(s => s.Id == id);
+                return this.Parent.AllSkiers.FirstOrDefault(s => s.Id == id);
             }
 
             App.Current.Dispatcher.Invoke(async () =>
             {
-                var statistics = await this.statisticLogic.GetRaceStatistics(race.Id, runNumber, race.SensorAmount);
+                var statistics = await this.statisticLogic.GetRaceStatistics(this.race.Id, this.runNumber, this.race.SensorAmount);
                 var stats = statistics.Select(s => new StatsItemViewModel(s, GetSkierById(s.SkierId))).ToList();
-                Stats.SetItems(stats);
+                this.Stats.SetItems(stats);
             });
 
             return Task.CompletedTask;
