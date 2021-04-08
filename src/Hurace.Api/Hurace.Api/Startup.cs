@@ -25,17 +25,21 @@ namespace Hurace.Api
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment environment)
         {
             Configuration = configuration;
+            Environment = environment;
         }
 
         public IConfiguration Configuration { get; }
+        public IWebHostEnvironment Environment { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string allowedOrigin = Configuration.GetSection("AllowedOrigin").Value;
+            string allowedOrigin = Environment.IsDevelopment()
+                ? Configuration.GetValue<string>("AllowedOrigin-DEV")
+                : Configuration.GetValue<string>("AllowedOrigin");
             services.AddCors(options => options.AddPolicy("CorsPolicy", builder =>
             {
                 builder
@@ -68,8 +72,12 @@ namespace Hurace.Api
             services.AddSingleton(ConfigureMapper());
 
             // Connection and provider configuration
-            string connectionString = Configuration.GetSection("DbConnectionString").Value;
-            string providerName = Configuration.GetSection("DbProviderName").Value;
+            string connectionString = Environment.IsDevelopment()
+                ? Configuration.GetValue<string>("DbConnectionString-DEV")
+                : Configuration.GetValue<string>("DbConnectionString");
+            string providerName = Environment.IsDevelopment()
+                ? Configuration.GetValue<string>("DbProviderName-DEV")
+                : Configuration.GetValue<string>("DbProviderName");
 
             services.AddSingleton<IConnectionFactory>(new DefaultConnectionFactory(connectionString, providerName));
             services.AddSingleton<Compiler>(DbUtil.GetCompiler(providerName));
