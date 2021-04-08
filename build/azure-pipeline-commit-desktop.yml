@@ -10,6 +10,10 @@ pr:
   branches:
     include:
       - '*'
+  paths:
+    include:
+      - 'src/Hurace.Desktop'
+      - 'src/Hurace.Shared'
 
 pool:
   vmImage: 'windows-latest'
