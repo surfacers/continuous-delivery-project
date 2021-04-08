@@ -4,6 +4,8 @@ using System.Data;
 using System.Threading.Tasks;
 using AutoMapper;
 using AutoMapper.Data;
+using Azure.Identity;
+using Azure.Security.KeyVault.Secrets;
 using Hurace.Core.Logic;
 using Hurace.Core.Logic.Models;
 using Hurace.Core.Models;
@@ -70,8 +72,22 @@ namespace Hurace.RaceControl
             .CreateMapper();
         }
 
+        public static bool IsDebug()
+        {
+#if DEBUG
+            return true;
+#else
+            return false;
+#endif
+        }
+
         public static IUnityContainer ConfigureDependencies()
         {
+            // Authenticate KeyVault Client
+            var secrets = new SecretClient(
+                new Uri($"https://{ConfigurationManager.AppSettings["KeyVaultName"]}.vault.azure.net/"),
+                new DefaultAzureCredential());
+
             var container = new UnityContainer();
 
             // Services
@@ -91,8 +107,12 @@ namespace Hurace.RaceControl
                 .RegisterType<ISeasonLogic, SeasonLogic>();
 
             // Generic Manager
-            string connectionString = ConfigurationManager.AppSettings["DbConnectionString"].ToString();
-            string providerName = ConfigurationManager.AppSettings["DbProviderName"].ToString();
+            string connectionString = IsDebug()
+                ? secrets.GetSecret("DbConnectionString-DEV").Value.Value
+                : secrets.GetSecret("DbConnectionString").Value.Value;
+            string providerName = IsDebug()
+                ? secrets.GetSecret("DbProviderName-DEV").Value.Value
+                : secrets.GetSecret("DbProviderName").Value.Value;
 
             container
                 .RegisterInstance<IConnectionFactory>(new DefaultConnectionFactory(connectionString, providerName))
@@ -109,7 +129,9 @@ namespace Hurace.RaceControl
                 .RegisterType<IRaceDataManager, RaceDataManager>();
 
             // SignalR
-            string signalREndpoint = ConfigurationManager.AppSettings["SignalREndpoint"].ToString();
+            string signalREndpoint = IsDebug()
+                ? ConfigurationManager.AppSettings["SignalREndpoint"].ToString()
+                : secrets.GetSecret("SignalREndpoint").Value.Value;
             Console.WriteLine(signalREndpoint);
             var connection = new HubConnectionBuilder()
                 .WithUrl(signalREndpoint)
