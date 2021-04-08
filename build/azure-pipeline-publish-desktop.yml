@@ -15,7 +15,6 @@ variables:
   projectName: 'Hurace.RaceControl'
   projectPath: 'src/Hurace.Desktop/Hurace.RaceControl'
   projectFile: 'src/Hurace.Desktop/Hurace.RaceControl/Hurace.RaceControl.csproj'
-  buildConfiguration: 'Release'
 
 steps:
 - task: DotNetCoreCLI@2
