@@ -23,7 +23,7 @@ steps:
   inputs:
     command: 'publish'
     projects: $(projectFile)
-    arguments: '-r win10-x64 /p:PublishSingleFile=true /property:InformationalVersion=$(Build.BuildNumber) --output $(build.artifactstagingdirectory)'
+    arguments: '-r win10-x64 -c $(buildConfiguration) /p:PublishSingleFile=true /property:InformationalVersion=$(Build.BuildNumber) --output $(build.artifactstagingdirectory)'
     publishWebProjects: false
     zipAfterPublish: false
     modifyOutputPath: true
