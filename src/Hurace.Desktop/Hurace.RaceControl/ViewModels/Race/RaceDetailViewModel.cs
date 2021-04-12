@@ -18,45 +18,45 @@ namespace Hurace.RaceControl.ViewModels.Race
 
         public RaceDetailViewModel(IRaceViewModel parent)
         {
-            Parent = parent;
-            UpdateNavigationTabs();
+            this.Parent = parent;
+            this.UpdateNavigationTabs();
         }
 
         public void UpdateNavigationTabs()
         {
             var tabs = new List<NavigationItemViewModel<IRaceViewModel>>()
             {
-                NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailDataView, RaceDetailDataViewModel>("Data", Parent)
+                NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailDataView, RaceDetailDataViewModel>("Data", this.Parent)
             };
 
-            if (Parent?.Races?.Selected?.Race != null)
+            if (this.Parent?.Races?.Selected?.Race != null)
             {
-                var race = Parent.Races.Selected.Race;
+                var race = this.Parent.Races.Selected.Race;
 
                 if (race.Id != 0 && race.RaceState == RaceState.NotStarted)
                 {
-                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailStartListView, RaceDetailStartListViewModel>("Start List", Parent));
+                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailStartListView, RaceDetailStartListViewModel>("Start List", this.Parent));
                 }
 
                 if (race.Id != 0 && race.RaceState != RaceState.NotStarted)
                 {
                     string runTitle = race.HasSecondRun() ? "Run 1" : "Run";
-                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailRunView, RaceDetailRunViewModel>(runTitle, Parent, 1));
+                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailRunView, RaceDetailRunViewModel>(runTitle, this.Parent, 1));
                 }
 
                 if (race.Id != 0 && race.RaceState != RaceState.NotStarted && race.HasSecondRun())
                 {
-                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailRunView, RaceDetailRunViewModel>("Run 2", Parent, 2));
+                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<RaceDetailRunView, RaceDetailRunViewModel>("Run 2", this.Parent, 2));
                 }
 
                 if (race.Id != 0 && race.RaceState != RaceState.NotStarted)
                 {
-                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<DisplayControlView, DisplayControlViewModel>("Display Control", Parent));
+                    tabs.Add(NavigationItemViewModel<IRaceViewModel>.Of<DisplayControlView, DisplayControlViewModel>("Display Control", this.Parent));
                 }
             }
 
-            NavigationViewModel.SetItems(tabs);
-            Raise(nameof(NavigationViewModel));
+            this.NavigationViewModel.SetItems(tabs);
+            this.Raise(nameof(this.NavigationViewModel));
         }
     }
 }

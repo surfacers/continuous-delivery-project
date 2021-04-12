@@ -8,6 +8,10 @@
     <PackageReference Include="FluentValidation" Version="9.5.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0" />
     <PackageReference Include="OneOf" Version="2.1.151" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
   </ItemGroup>
 

@@ -9,6 +9,9 @@ pr:
   branches:
     include:
       - '*'
+  paths:
+    include:
+      - 'src/Hurace.Web'
 
 variables:
   solution: 'src/Hurace.Web'

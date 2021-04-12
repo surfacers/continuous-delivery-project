@@ -26,7 +26,7 @@ namespace Hurace.Core.Logic
         {
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                bool successful = await startListManager.SaveAsync(raceId, runNumber, startList);
+                bool successful = await this.startListManager.SaveAsync(raceId, runNumber, startList);
                 if (!successful)
                 {
                     return new SaveResult.Error(ErrorCode.SaveError);
@@ -40,8 +40,8 @@ namespace Hurace.Core.Logic
 
         public async Task<IEnumerable<StartList>> GenerateStartListForRunAsync(int raceId, int runNumber)
         {
-            var previousStartList = await GetByRaceIdAsync(raceId, runNumber - 1);
-            var raceData = await raceDataManager.GetByRaceIdAsync(raceId, runNumber - 1);
+            var previousStartList = await this.GetByRaceIdAsync(raceId, runNumber - 1);
+            var raceData = await this.raceDataManager.GetByRaceIdAsync(raceId, runNumber - 1);
 
             var startList = previousStartList
                 .Where(s => !s.IsDisqualified)
@@ -64,18 +64,18 @@ namespace Hurace.Core.Logic
                 })
                 .ToList();
 
-            await startListManager.SaveAsync(raceId, runNumber, startList);
+            await this.startListManager.SaveAsync(raceId, runNumber, startList);
             return startList;
         }
 
         public async Task<IEnumerable<StartList>> GetByRaceIdAsync(int raceId, int runNumber)
         {
-            return await startListManager.GetByRaceIdAsync(raceId, runNumber);
+            return await this.startListManager.GetByRaceIdAsync(raceId, runNumber);
         }
 
         public async Task<bool> UpdateDisqualified(int id, bool isDisqualified)
         {
-            return await startListManager.UpdateDisqualified(id, isDisqualified);
+            return await this.startListManager.UpdateDisqualified(id, isDisqualified);
         }
     }
 }

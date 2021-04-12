@@ -8,21 +8,21 @@ namespace Hurace.RaceControl.ViewModels.Skier
     {
         public Models.Skier Skier { get; private set; }
 
-        public string FullName => Skier.FullName();
-        public string CountryCode => Skier.CountryCode;
-        public bool IsActive => Skier.IsActive;
+        public string FullName => this.Skier.FullName();
+        public string CountryCode => this.Skier.CountryCode;
+        public bool IsActive => this.Skier.IsActive;
 
         public SkierListItemViewModel(Models.Skier skier)
         {
-            Skier = skier;
+            this.Skier = skier;
         }
 
         public void Update(Models.Skier skier)
         {
-            Skier = skier;
-            Raise(nameof(FullName));
-            Raise(nameof(CountryCode));
-            Raise(nameof(IsActive));
+            this.Skier = skier;
+            this.Raise(nameof(this.FullName));
+            this.Raise(nameof(this.CountryCode));
+            this.Raise(nameof(this.IsActive));
         }
     }
 }

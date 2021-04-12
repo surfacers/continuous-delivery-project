@@ -13,7 +13,7 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
     {
         [Dependency] public IRaceLogic RaceLogic { get; set; }
 
-        public ObservableCollection<StartListItemViewModel> StartList => Parent.StartList1;
+        public ObservableCollection<StartListItemViewModel> StartList => this.Parent.StartList1;
 
         public INotificationService NotificationService { get; }
 
@@ -22,26 +22,28 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
 
         public RaceDetailDataViewModel()
         {
-            NotificationService = App.Container.Resolve<INotificationService>();
+            this.NotificationService = App.Container.Resolve<INotificationService>();
 
-            SaveCommandViewModel = new CommandViewModel(
-                "Save", "Save race",
-                async () => await Parent.SaveAsync(Parent.StartList1),
-                () => !Parent.Edit?.HasErrors ?? false);
+            this.SaveCommandViewModel = new CommandViewModel(
+                "Save", 
+                "Save race",
+                async () => await this.Parent.SaveAsync(this.Parent.StartList1),
+                () => !this.Parent.Edit?.HasErrors ?? false);
 
-            SaveCommandViewModel.OnSuccess += () => NotificationService.ShowMessage("Saved successfully");
-            SaveCommandViewModel.OnFailure += (ex) => NotificationService.ShowMessage("Save failed");
+            this.SaveCommandViewModel.OnSuccess += () => this.NotificationService.ShowMessage("Saved successfully");
+            this.SaveCommandViewModel.OnFailure += (ex) => this.NotificationService.ShowMessage("Save failed");
 
-            RemoveCommandViewModel = new CommandViewModel(
-                "Remove", "Remove race",
-                async () => await Parent.RemoveAsync(),
-                show: () => Parent.Races.Selected?.Race != null 
-                    ? RaceLogic.CanRemove(Parent.Races.Selected.Race)
+            this.RemoveCommandViewModel = new CommandViewModel(
+                "Remove", 
+                "Remove race",
+                async () => await this.Parent.RemoveAsync(),
+                show: () => this.Parent.Races.Selected?.Race != null 
+                    ? this.RaceLogic.CanRemove(this.Parent.Races.Selected.Race)
                     : true,
                 withStyle: ButtonStyle.Flat);
 
-            RemoveCommandViewModel.OnSuccess += () => NotificationService.ShowMessage("Removed successfully");
-            RemoveCommandViewModel.OnFailure += (ex) => NotificationService.ShowMessage("Remove failed");
+            this.RemoveCommandViewModel.OnSuccess += () => this.NotificationService.ShowMessage("Removed successfully");
+            this.RemoveCommandViewModel.OnFailure += (ex) => this.NotificationService.ShowMessage("Remove failed");
         }
 
         public override Task OnInitAsync()

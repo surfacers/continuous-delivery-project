@@ -17,7 +17,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GenerateStartListForRunAsync_ValidTest()
         {
             // Arrange
-            var startListLogic = GetStartListLogic();
+            var startListLogic = this.GetStartListLogic();
 
             // Act
             await startListLogic.UpdateDisqualified(84, isDisqualified: true);
@@ -39,7 +39,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetByRaceIdAsyncAsync_ValidTest(int raceId, int amount)
         {
             // Arrange
-            var startListLogic = GetStartListLogic();
+            var startListLogic = this.GetStartListLogic();
 
             // Act
             var result = await startListLogic.GetByRaceIdAsync(raceId, runNumber: 1);
@@ -57,7 +57,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetByRaceIdAsyncAsync_NotFoundTest(int raceId, int runNumber)
         {
             // Arrange
-            var startListLogic = GetStartListLogic();
+            var startListLogic = this.GetStartListLogic();
 
             // Act
             var result = await startListLogic.GetByRaceIdAsync(raceId, runNumber);
@@ -73,7 +73,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task UpdateDisqualified_ValidTest(int id, bool isDisqualified)
         {
             // Arrange
-            var startListLogic = GetStartListLogic();
+            var startListLogic = this.GetStartListLogic();
 
             // Act
             var result = await startListLogic.UpdateDisqualified(id, isDisqualified);
@@ -82,13 +82,13 @@ namespace Hurace.Logic.Test.Logics
             Assert.True(result == isDisqualified);
         }
 
-
         private IRaceDataManager GetRaceDataManager(Data data)
         {
             var raceDataManager = new Mock<IRaceDataManager>();
             raceDataManager
                 .Setup(m => m.GetByRaceIdAsync(It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync((int raceId, int runNumber) => {
+                .ReturnsAsync((int raceId, int runNumber) => 
+                {
                     var startListIds = data.StartLists.Where(r => r.RaceId == raceId && r.RunNumber == runNumber).Select(s => s.Id);
                     return data.RaceDatas.Where(r => startListIds.Contains(r.StartListId)).ToList();
                 });
@@ -127,7 +127,10 @@ namespace Hurace.Logic.Test.Logics
                 .Callback((int id, bool isDisqulified) =>
                 {
                     var startList = data.StartLists.Where(s => s.Id == id).FirstOrDefault();
-                    if (startList == null || startList.Id <= 0) throw new Exception("Startlist not found");
+                    if (startList == null || startList.Id <= 0)
+                    {
+                        throw new Exception("Startlist not found");
+                    }
 
                     startList.IsDisqualified = isDisqulified;
                 })
@@ -139,7 +142,7 @@ namespace Hurace.Logic.Test.Logics
         private IStartListLogic GetStartListLogic()
         {
             var data = new Data();
-            return new StartListLogic(GetStartListManager(data), GetRaceDataManager(data));
+            return new StartListLogic(this.GetStartListManager(data), this.GetRaceDataManager(data));
         }
     }
 }

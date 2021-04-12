@@ -38,7 +38,7 @@ namespace Hurace.Api.Controllers
         {
             Race race = await this.raceLogic.GetByIdAsync(raceId);
             IEnumerable<RaceStatisticEntry> raceResults = await this.statisticLogic.GetRaceStatistics(raceId, runNumber, race.SensorAmount);
-            return Ok(this.mapper.Map<IEnumerable<RaceStatisticEntryDto>>(raceResults));
+            return this.Ok(this.mapper.Map<IEnumerable<RaceStatisticEntryDto>>(raceResults));
         }
     }
 }

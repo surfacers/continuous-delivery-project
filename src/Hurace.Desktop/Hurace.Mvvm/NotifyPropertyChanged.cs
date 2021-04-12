@@ -13,7 +13,7 @@ namespace Hurace.Mvvm
             if (!EqualityComparer<T>.Default.Equals(value, field))
             {
                 field = value;
-                Raise(propertyName);
+                this.Raise(propertyName);
             }
         }
 

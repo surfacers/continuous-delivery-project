@@ -11,8 +11,8 @@ namespace Hurace.RaceControl
     {
         public MainWindow()
         {
-            InitializeComponent();
-            DataContext = App.Container.Resolve<MainViewModel>();
+            this.InitializeComponent();
+            this.DataContext = App.Container.Resolve<MainViewModel>();
         }
     }
 }

@@ -32,7 +32,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<SkierDto>>> GetAll()
         {
             IEnumerable<Skier> skiers = await this.skierLogic.GetAllAsync();
-            return Ok(this.mapper.Map<IEnumerable<SkierDto>>(skiers));
+            return this.Ok(this.mapper.Map<IEnumerable<SkierDto>>(skiers));
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<SkierDto>>> GetAllBy(Gender gender, bool isActive = true)
         {
             IEnumerable<Skier> skiers = await this.skierLogic.GetAllAsync(gender, isActive);
-            return Ok(this.mapper.Map<IEnumerable<SkierDto>>(skiers));
+            return this.Ok(this.mapper.Map<IEnumerable<SkierDto>>(skiers));
         }
 
         [HttpGet]
@@ -52,7 +52,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<SkierDto>>> GetById(int id)
         {
             Skier skier = await this.skierLogic.GetByIdAsync(id);
-            return Ok(this.mapper.Map<SkierDto>(skier));
+            return this.Ok(this.mapper.Map<SkierDto>(skier));
         }
 
         [HttpPost]
@@ -64,9 +64,9 @@ namespace Hurace.Api.Controllers
             var result = await this.skierLogic.SaveAsync(dbSkier);
 
             return result.Match(
-                success => StatusCode(200, success.Id),
-                validationError => StatusCode(400, validationError.Errors),
-                error => StatusCode(500, error.ErrorCode));
+                success => this.StatusCode(200, success.Id),
+                validationError => this.StatusCode(400, validationError.Errors),
+                error => this.StatusCode(500, error.ErrorCode));
         }
 
         [HttpDelete]
@@ -76,8 +76,8 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult> Remove(int id)
         {
             return (await this.skierLogic.RemoveAsync(id)) 
-                ? StatusCode(200) 
-                : StatusCode(400);
+                ? this.StatusCode(200) 
+                : this.StatusCode(400);
         }
     }
 }

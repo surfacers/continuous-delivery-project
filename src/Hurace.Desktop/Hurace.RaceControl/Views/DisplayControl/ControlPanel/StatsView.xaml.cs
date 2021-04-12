@@ -22,7 +22,7 @@ namespace Hurace.RaceControl.Views.DisplayControl.ControlPanel
     {
         public StatsView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

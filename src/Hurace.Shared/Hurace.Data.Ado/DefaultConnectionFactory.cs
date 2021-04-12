@@ -19,9 +19,9 @@ namespace Hurace.Data.Ado
 
         public DefaultConnectionFactory(string connectionString, string providerName)
         {
-            ConnectionString = connectionString;
-            ProviderName = providerName;
-            dbProviderFactory = DbUtil.GetDbProvicerFactory(providerName);
+            this.ConnectionString = connectionString;
+            this.ProviderName = providerName;
+            this.dbProviderFactory = DbUtil.GetDbProvicerFactory(providerName);
         }
 
         public string ConnectionString { get; }
@@ -30,8 +30,8 @@ namespace Hurace.Data.Ado
 
         public async Task<DbConnection> CreateConnectionAsync()
         {
-            var conn = dbProviderFactory.CreateConnection();
-            conn.ConnectionString = ConnectionString;
+            var conn = this.dbProviderFactory.CreateConnection();
+            conn.ConnectionString = this.ConnectionString;
             await conn.OpenAsync();
 
             return conn;

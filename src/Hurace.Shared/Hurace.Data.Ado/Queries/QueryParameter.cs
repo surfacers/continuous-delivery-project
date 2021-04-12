@@ -4,8 +4,8 @@
     {
         public QueryParameter(string name, object value)
         {
-            Name = name;
-            Value = value;
+            this.Name = name;
+            this.Value = value;
         }
 
         public string Name { get; }

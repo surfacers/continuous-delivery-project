@@ -15,15 +15,15 @@ namespace Hurace.RaceControl.ViewModels.Controls
         private NavigationItemViewModel<TParentViewModel> currentItem;
         public NavigationItemViewModel<TParentViewModel> CurrentItem
         {
-            get => currentItem;
+            get => this.currentItem;
             set 
             {
-                if (currentItem != value)
+                if (this.currentItem != value)
                 {
-                    currentItem?.ViewModel.OnDestroyAsync();
+                    this.currentItem?.ViewModel.OnDestroyAsync();
 
-                    Set(ref currentItem, value);
-                    currentItem?.ViewModel.OnInit();
+                    this.Set(ref this.currentItem, value);
+                    this.currentItem?.ViewModel.OnInit();
                 }
             }
         }
@@ -36,29 +36,43 @@ namespace Hurace.RaceControl.ViewModels.Controls
             IEnumerable<NavigationItemViewModel<TParentViewModel>> items,
             NavigationItemViewModel<TParentViewModel> currentItem = null)
         {
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (!items.Any()) throw new ArgumentException(nameof(items));
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
 
-            Items = new ObservableCollection<NavigationItemViewModel<TParentViewModel>>(items);
-            CurrentItem = currentItem ?? Items.First();
+            if (!items.Any())
+            {
+                throw new ArgumentException(nameof(items));
+            }
+
+            this.Items = new ObservableCollection<NavigationItemViewModel<TParentViewModel>>(items);
+            this.CurrentItem = currentItem ?? this.Items.First();
         }
 
         public void SetItems(
             IEnumerable<NavigationItemViewModel<TParentViewModel>> items)
         {
-            if (items == null) throw new ArgumentNullException(nameof(items));
-            if (!items.Any()) throw new ArgumentException(nameof(items));
+            if (items == null)
+            {
+                throw new ArgumentNullException(nameof(items));
+            }
 
-            string lastSelected = currentItem?.Title;
-            Items.SetItems(items);
+            if (!items.Any())
+            {
+                throw new ArgumentException(nameof(items));
+            }
 
-            CurrentItem = Items
+            string lastSelected = this.currentItem?.Title;
+            this.Items.SetItems(items);
+
+            this.CurrentItem = this.Items
                 .Where(i => i.Title.Equals(lastSelected))
                 .FirstOrDefault();
 
-            if (currentItem == null)
+            if (this.currentItem == null)
             {
-                CurrentItem = items.First();
+                this.CurrentItem = items.First();
             }
         }
     }

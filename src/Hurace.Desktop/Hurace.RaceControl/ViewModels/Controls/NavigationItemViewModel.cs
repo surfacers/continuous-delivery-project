@@ -15,16 +15,16 @@ namespace Hurace.RaceControl.ViewModels.Controls
             UserControl view, 
             TabViewModel<TParentViewModel> viewModel)
         {
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-            View = view ?? throw new ArgumentNullException(nameof(view));
-            ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+            this.Title = title ?? throw new ArgumentNullException(nameof(title));
+            this.View = view ?? throw new ArgumentNullException(nameof(view));
+            this.ViewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
 
-            View.DataContext = ViewModel;
+            this.View.DataContext = this.ViewModel;
         }
 
         // ToString needs to be implemented so the dragablz:TabablzControl is showing the
         // right header because there is currently no way to define a custom header template
-        public override string ToString() => Title;
+        public override string ToString() => this.Title;
 
         public static NavigationItemViewModel<TParentViewModel> Of<TView, TViewModel>(
             string title, 

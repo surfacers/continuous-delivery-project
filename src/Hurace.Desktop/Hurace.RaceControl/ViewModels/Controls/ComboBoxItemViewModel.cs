@@ -10,10 +10,10 @@ namespace Hurace.RaceControl.ViewModels.Controls
 
         public ComboBoxItemViewModel(string name, T value)
         {
-            Name = name ?? throw new ArgumentNullException(nameof(name));
-            Value = value;
+            this.Name = name ?? throw new ArgumentNullException(nameof(name));
+            this.Value = value;
         }
 
-        public override string ToString() => Name;
+        public override string ToString() => this.Name;
     }
 }

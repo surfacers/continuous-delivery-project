@@ -16,21 +16,23 @@ namespace Hurace.Data.Ado.Managers
 
         public Task<IEnumerable<Skier>> GetAllAsync(Gender gender, bool isActive)
         {
-            var query = Query()
+            var query = this.Query()
                 .Where(nameof(Skier.Gender), gender)
                 .Where(nameof(Skier.IsActive), isActive);
 
-            return QueryAsync(query);
+            return this.QueryAsync(query);
         }
 
         public Task<IEnumerable<Skier>> GetAllAsync(bool? isActive = null)
         {
-            var query = Query();
+            var query = this.Query();
 
             if (isActive != null)
+            {
                 query.Where(nameof(Skier.IsActive), isActive);
+            }
 
-            return QueryAsync(query);
+            return this.QueryAsync(query);
         }
     }
 }

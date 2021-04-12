@@ -11,9 +11,9 @@ namespace Hurace.RaceControl.Views.Simulator
     {
         public SimulatorSettingsView()
         {
-            InitializeComponent();
-            DataContext = App.Container.Resolve<SimulatorSettingsEditViewModel>();
-            (DataContext as SimulatorSettingsEditViewModel).Dispatcher = Dispatcher;
+            this.InitializeComponent();
+            this.DataContext = App.Container.Resolve<SimulatorSettingsEditViewModel>();
+            (this.DataContext as SimulatorSettingsEditViewModel).Dispatcher = this.Dispatcher;
         }
     }
 }

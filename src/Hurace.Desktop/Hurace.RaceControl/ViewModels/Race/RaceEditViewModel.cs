@@ -17,62 +17,62 @@ namespace Hurace.RaceControl.ViewModels.Race
         }
 
         public string DisplayName 
-            => Original.Id == 0 ? "New Race" : "Edit Race";
+            => this.Original.Id == 0 ? "New Race" : "Edit Race";
 
         private string name;
         public string Name
         {
-            get => name;
-            set => Set(ref name, value);
+            get => this.name;
+            set => this.Set(ref this.name, value);
         }
 
         private string description;
         public string Description
         {
-            get => description;
-            set => Set(ref description, value);
+            get => this.description;
+            set => this.Set(ref this.description, value);
         }
 
         private ComboBoxItemViewModel<RaceType> raceType;
         public ComboBoxItemViewModel<RaceType> RaceType
         {
-            get => raceType;
-            set => Set(ref raceType, value);
+            get => this.raceType;
+            set => this.Set(ref this.raceType, value);
         }
 
         private DateTime? raceDate;
         public DateTime? RaceDate
         {
-            get => raceDate;
-            set => Set(ref raceDate, value);
+            get => this.raceDate;
+            set => this.Set(ref this.raceDate, value);
         }
 
         private ComboBoxItemViewModel<int> locationId;
         public ComboBoxItemViewModel<int> LocationId
         {
-            get => locationId;
-            set => Set(ref locationId, value);
+            get => this.locationId;
+            set => this.Set(ref this.locationId, value);
         }
 
         private int sensorAmount;
         public int SensorAmount
         {
-            get => sensorAmount;
-            set => Set(ref sensorAmount, value);
+            get => this.sensorAmount;
+            set => this.Set(ref this.sensorAmount, value);
         }
 
         private Gender gender;
         public Gender Gender
         {
-            get => gender;
-            set => Set(ref gender, value);
+            get => this.gender;
+            set => this.Set(ref this.gender, value);
         }
 
         private RaceState raceState;
         public RaceState RaceState
         {
-            get => raceState;
-            set => Set(ref raceState, value);
+            get => this.raceState;
+            set => this.Set(ref this.raceState, value);
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Hurace.Core.Extensions
 
         public static void ForEach<T>(this IList<T> items, Action<T, int> action)
         {
-            for (int i = 0; i< items.Count; i++)
+            for (int i = 0; i < items.Count; i++)
             {
                 action(items[i], i);
             }

@@ -15,71 +15,71 @@ namespace Hurace.Simulator
         private int minInterval;
         public int MinInterval 
         {
-            get => minInterval;
-            set => Set(ref minInterval, value);
+            get => this.minInterval;
+            set => this.Set(ref this.minInterval, value);
         }
 
         private int maxInterval;
         public int MaxInterval
         {
-            get => maxInterval;
-            set => Set(ref maxInterval, value);
+            get => this.maxInterval;
+            set => this.Set(ref this.maxInterval, value);
         }
 
         private int minRealInterval;
         public int MinRealInterval
         {
-            get => minRealInterval;
-            set => Set(ref minRealInterval, value);
+            get => this.minRealInterval;
+            set => this.Set(ref this.minRealInterval, value);
         }
 
         private int maxRealInterval;
         public int MaxRealInterval
         {
-            get => maxRealInterval;
-            set => Set(ref maxRealInterval, value);
+            get => this.maxRealInterval;
+            set => this.Set(ref this.maxRealInterval, value);
         }
 
         private int sensorAmount;
         public int SensorAmount
         {
-            get => sensorAmount;
-            set => Set(ref sensorAmount, value);
+            get => this.sensorAmount;
+            set => this.Set(ref this.sensorAmount, value);
         }
 
         private int triggerSuccessWeight;
         public int TriggerSuccessWeight
         {
-            get => triggerSuccessWeight;
-            set => Set(ref triggerSuccessWeight, value);
+            get => this.triggerSuccessWeight;
+            set => this.Set(ref this.triggerSuccessWeight, value);
         }
 
         private int doNotTriggerWeight;
         public int DoNotTriggerWeight
         {
-            get => doNotTriggerWeight;
-            set => Set(ref doNotTriggerWeight, value);
+            get => this.doNotTriggerWeight;
+            set => this.Set(ref this.doNotTriggerWeight, value);
         }
 
         private int setWrongSensorIdWeight;
         public int SetWrongSensorIdWeight
         {
-            get => setWrongSensorIdWeight;
-            set => Set(ref setWrongSensorIdWeight, value);
+            get => this.setWrongSensorIdWeight;
+            set => this.Set(ref this.setWrongSensorIdWeight, value);
         }
 
         private int setWrongDeltaTimeWeight;
         public int SetWrongDeltaTimeWeight
         {
-            get => setWrongDeltaTimeWeight;
-            set => Set(ref setWrongDeltaTimeWeight, value);
+            get => this.setWrongDeltaTimeWeight;
+            set => this.Set(ref this.setWrongDeltaTimeWeight, value);
         }
 
         private int triggerMultipleWeight;
         public int TriggerMultipleWeight
         {
-            get => triggerMultipleWeight;
-            set => Set(ref triggerMultipleWeight, value);
+            get => this.triggerMultipleWeight;
+            set => this.Set(ref this.triggerMultipleWeight, value);
         }
     }
 }

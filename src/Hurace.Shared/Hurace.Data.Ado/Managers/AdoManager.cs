@@ -19,11 +19,11 @@ namespace Hurace.Data.Ado
 
         public async Task<IEnumerable<T>> QueryAsync<T>(string query, RowMapper<T> mapper, params QueryParameter[] parameters)
         {
-            using (var connection = await connectionFactory.CreateConnectionAsync())
+            using (var connection = await this.connectionFactory.CreateConnectionAsync())
             using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = query;
-                AddParameters(command, parameters);
+                this.AddParameters(command, parameters);
 
                 var items = new List<T>();
                 using (DbDataReader reader = await command.ExecuteReaderAsync())
@@ -40,28 +40,28 @@ namespace Hurace.Data.Ado
 
         public async Task<T> QueryFirstAsync<T>(string query, RowMapper<T> mapper, params QueryParameter[] parameters)
         {
-            return (await QueryAsync(query, mapper, parameters)).FirstOrDefault();
+            return (await this.QueryAsync(query, mapper, parameters)).FirstOrDefault();
         }
 
         public async Task<int> ExecuteAsync(string query, params QueryParameter[] parameters)
         {
-            using (var connection = await connectionFactory.CreateConnectionAsync())
+            using (var connection = await this.connectionFactory.CreateConnectionAsync())
             using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = query;
-                AddParameters(command, parameters);
+                this.AddParameters(command, parameters);
 
                 return await command.ExecuteNonQueryAsync();
             }
         }
 
-        public async Task<R> ExecuteAsync<R>(string query, DbAction<R> action, params QueryParameter[] parameters)
+        public async Task<T> ExecuteAsync<T>(string query, DbAction<T> action, params QueryParameter[] parameters)
         {
-            using (var connection = await connectionFactory.CreateConnectionAsync())
+            using (var connection = await this.connectionFactory.CreateConnectionAsync())
             using (DbCommand command = connection.CreateCommand())
             {
                 command.CommandText = query;
-                AddParameters(command, parameters);
+                this.AddParameters(command, parameters);
 
                 return await action(command);
             }

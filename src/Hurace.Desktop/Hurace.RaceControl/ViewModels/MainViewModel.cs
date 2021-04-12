@@ -18,7 +18,7 @@ namespace Hurace.RaceControl.ViewModels
 
         public MainViewModel()
         {
-            NavigationViewModel = new NavigationControlViewModel<MainViewModel>(new[]
+            this.NavigationViewModel = new NavigationControlViewModel<MainViewModel>(new[]
             {
                 NavigationItemViewModel<MainViewModel>.Of<SkierView, SkierViewModel>("Skier", this),
                 NavigationItemViewModel<MainViewModel>.Of<RaceView, RaceViewModel>("Race", this),
