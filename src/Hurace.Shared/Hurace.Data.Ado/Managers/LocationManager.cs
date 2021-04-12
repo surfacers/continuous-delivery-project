@@ -16,8 +16,8 @@ namespace Hurace.Data.Ado.Managers
 
         public Task<IEnumerable<Location>> GetAllByIdsAsync(IEnumerable<int> ids)
         {
-            Query query = Query().WhereIn(nameof(Location.Id), ids);
-            return QueryAsync(query);
+            Query query = this.Query().WhereIn(nameof(Location.Id), ids);
+            return this.QueryAsync(query);
         }
     }
 }

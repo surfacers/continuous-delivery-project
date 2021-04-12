@@ -16,49 +16,49 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
         public Models.StartList StartList { get; private set; }
         public ObservableCollection<RaceDataItemViewModel> RaceData { get; private set; }
             = new ObservableCollection<RaceDataItemViewModel>();
-        public DateTime? TotalTime => RaceData.LastOrDefault()?.TotalTime;
+        public DateTime? TotalTime => this.RaceData.LastOrDefault()?.TotalTime;
 
         private int? position;
         public int? Position
         {
-            get => position;
-            set => Set(ref position, value);
+            get => this.position;
+            set => this.Set(ref this.position, value);
         }
 
         private DateTime? diffTime;
         public DateTime? DiffTime
         {
-            get => diffTime;
-            set => Set(ref diffTime, value);
+            get => this.diffTime;
+            set => this.Set(ref this.diffTime, value);
         }
 
-        public string FullName => Skier.FullName();
-        public string CountryCode => Skier.CountryCode;
-        public int StartNumber => StartList.StartNumber;
-        public bool IsDisqualified => StartList.IsDisqualified;
+        public string FullName => this.Skier.FullName();
+        public string CountryCode => this.Skier.CountryCode;
+        public int StartNumber => this.StartList.StartNumber;
+        public bool IsDisqualified => this.StartList.IsDisqualified;
 
         private StartListState startListState;
         public StartListState StartListState
         {
-            get => startListState;
-            set => Set(ref startListState, value);
+            get => this.startListState;
+            set => this.Set(ref this.startListState, value);
         }
 
         public StartListItemViewModel(Models.Skier skier, Models.StartList startList)
         {
-            Skier = skier;
-            StartList = startList;
+            this.Skier = skier;
+            this.StartList = startList;
         }
 
         public void Update(Models.Skier skier, Models.StartList startList)
         {
-            Skier = skier;
-            Raise(nameof(FullName));
-            Raise(nameof(CountryCode));
+            this.Skier = skier;
+            this.Raise(nameof(this.FullName));
+            this.Raise(nameof(this.CountryCode));
 
-            StartList = startList;
-            Raise(nameof(StartNumber));
-            Raise(nameof(IsDisqualified));
+            this.StartList = startList;
+            this.Raise(nameof(this.StartNumber));
+            this.Raise(nameof(this.IsDisqualified));
         }
 
         public void SetRaceData(
@@ -67,8 +67,8 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
             int runningStartListId)
         {
             DateTime? startTime = raceData.FirstOrDefault()?.TimeStamp ?? null;
-            RaceData.SetItems(raceData, r => new RaceDataItemViewModel(r, startTime));
-            StartListState = StartList.GetStartListState(raceData, sensorAmount, runningStartListId);
+            this.RaceData.SetItems(raceData, r => new RaceDataItemViewModel(r, startTime));
+            this.StartListState = this.StartList.GetStartListState(raceData, sensorAmount, runningStartListId);
         }
     }
 }

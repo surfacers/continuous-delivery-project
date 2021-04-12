@@ -7,9 +7,9 @@ namespace Hurace.Core.Validators
     {
         public LocationValidator()
         {
-            RuleFor(l => l.Id).PrimaryKey();
-            RuleFor(l => l.CountryCode).NotEmpty().Length(3);
-            RuleFor(l => l.City).NotEmpty().Length(2, 120);
+            this.RuleFor(l => l.Id).PrimaryKey();
+            this.RuleFor(l => l.CountryCode).NotEmpty().Length(3);
+            this.RuleFor(l => l.City).NotEmpty().Length(2, 120);
         }
     }
 }

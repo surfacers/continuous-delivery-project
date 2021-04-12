@@ -7,8 +7,8 @@ namespace Hurace.Core.Logic.Models
 {
     public class SaveResult : OneOfBase<SaveResult.Success, SaveResult.ValidationError, SaveResult.Error>
     {
-        public bool IsSuccess => IsT0;
-        public bool IsError => !IsSuccess;
+        public bool IsSuccess => this.IsT0;
+        public bool IsError => !this.IsSuccess;
 
         public class Success : SaveResult 
         {

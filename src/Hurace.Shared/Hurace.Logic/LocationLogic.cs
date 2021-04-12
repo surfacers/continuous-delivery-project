@@ -19,7 +19,7 @@ namespace Hurace.Logic
         }
 
         public async Task<IEnumerable<Location>> GetAllAsync()
-            =>  await locationManager.GetAllAsync();
+            => await this.locationManager.GetAllAsync();
 
         public Task<IEnumerable<string>> GetCountriesAsync()
         {

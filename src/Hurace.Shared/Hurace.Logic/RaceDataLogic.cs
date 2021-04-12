@@ -35,7 +35,7 @@ namespace Hurace.Core.Logic
             {
                 foreach (var data in raceData)
                 {
-                    await raceDataManager.CreateAsync(data);
+                    await this.raceDataManager.CreateAsync(data);
                 }
 
                 transaction.Complete();
@@ -46,7 +46,7 @@ namespace Hurace.Core.Logic
 
         public async Task<IEnumerable<RaceData>> GetByRaceIdAsync(int raceId, int runNumber)
         {
-            var data = await raceDataManager.GetByRaceIdAsync(raceId, runNumber);
+            var data = await this.raceDataManager.GetByRaceIdAsync(raceId, runNumber);
             return data
                 .OrderBy(m => m.StartListId)
                 .ThenBy(m => m.SensorId)

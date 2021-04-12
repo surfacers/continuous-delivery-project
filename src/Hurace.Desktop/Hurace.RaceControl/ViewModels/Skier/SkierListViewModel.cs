@@ -13,8 +13,8 @@ namespace Hurace.RaceControl.ViewModels.Skier
 
         public SkierListViewModel(ISkierViewModel parent)
         {
-            Parent = parent ?? throw new ArgumentNullException();
-            NewCommand = new AsyncDelegateCommand(Parent.NewAsync);
+            this.Parent = parent ?? throw new ArgumentNullException();
+            this.NewCommand = new AsyncDelegateCommand(this.Parent.NewAsync);
         }
     }
 }

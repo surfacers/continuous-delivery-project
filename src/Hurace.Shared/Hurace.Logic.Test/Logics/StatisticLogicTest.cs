@@ -15,7 +15,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetRaceStatisticsTest()
         {
             // Arrange
-            var statisticLogic = GetStatisticLogic();
+            var statisticLogic = this.GetStatisticLogic();
 
             // Act
             var result = (await statisticLogic.GetRaceStatistics(1, 1, 5)).ToList();
@@ -59,7 +59,6 @@ namespace Hurace.Logic.Test.Logics
         }
 
         private IStatisticLogic GetStatisticLogic()
-            => new StatisticLogic(GetRaceDataManager(), GetStartListManager());
+            => new StatisticLogic(this.GetRaceDataManager(), this.GetStartListManager());
     }
 }
-

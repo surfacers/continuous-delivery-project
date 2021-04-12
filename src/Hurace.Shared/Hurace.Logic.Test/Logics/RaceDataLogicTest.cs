@@ -1,14 +1,12 @@
-﻿using Hurace.Core.Logic;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Hurace.Core.Logic;
 using Hurace.Core.Models;
+using Hurace.Core.Validators;
 using Hurace.Data;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Linq;
 using Xunit;
-using System.Threading.Tasks;
-using Hurace.Core.Validators;
 
 namespace Hurace.Logic.Test.Logics
 {
@@ -21,7 +19,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetByRaceIdAsync_ValidTest(int raceId, int runNumber, int amount)
         {
             // Arrange
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
 
             // Act
             var result = (await raceLogic.GetByRaceIdAsync(raceId, runNumber)).ToList();
@@ -34,7 +32,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task CreateAsyncTest()
         {
             // Arrange
-            var raceLogic = GetRaceLogic();
+            var raceLogic = this.GetRaceLogic();
             var raceData = new RaceData { Id = 1, SensorId = 2, StartListId = 1, TimeStamp = DateTime.Now };
 
             // Act
@@ -51,7 +49,8 @@ namespace Hurace.Logic.Test.Logics
             var raceDataManager = new Mock<IRaceDataManager>();
             raceDataManager
                 .Setup(m => m.GetByRaceIdAsync(It.IsAny<int>(), It.IsAny<int>()))
-                .ReturnsAsync((int raceId, int runNumber) => {
+                .ReturnsAsync((int raceId, int runNumber) => 
+                {
                     return data.StartLists
                         .Where(m => m.RaceId == raceId && m.RunNumber == runNumber)
                         .SelectMany(m => data.RaceDatas.Where(r => r.StartListId == m.Id));
@@ -61,8 +60,6 @@ namespace Hurace.Logic.Test.Logics
         }
 
         private IRaceDataLogic GetRaceLogic()
-            => new RaceDataLogic(GetRaceDataManager(), new RaceDataValidator());
-
+            => new RaceDataLogic(this.GetRaceDataManager(), new RaceDataValidator());
     }
 }
-

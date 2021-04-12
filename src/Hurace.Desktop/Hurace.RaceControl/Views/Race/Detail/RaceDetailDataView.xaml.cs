@@ -22,7 +22,7 @@ namespace Hurace.RaceControl.Views.Race.Detail
     {
         public RaceDetailDataView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

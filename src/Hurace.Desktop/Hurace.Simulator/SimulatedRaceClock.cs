@@ -29,19 +29,19 @@ namespace Hurace.Simulator
         private ClockSettings settings;
         private Random random = new Random();
         
-        public bool IsRunning => timer != null;
+        public bool IsRunning => this.timer != null;
 
         public void Start(ClockSettings settings)
         {
-            Stop();
+            this.Stop();
             this.settings = settings;
             this.sensorId = -1;
             this.time = DateTime.Now;
 
-            timer = new System.Timers.Timer();
-            timer.Interval = random.Next(settings.MinInterval, settings.MaxInterval);
-            timer.Elapsed += (_, __) => Invoke();
-            timer.Start();
+            this.timer = new System.Timers.Timer();
+            this.timer.Interval = this.random.Next(settings.MinInterval, settings.MaxInterval);
+            this.timer.Elapsed += (_, __) => this.Invoke();
+            this.timer.Start();
         }
 
         private IDictionary<InvokeType, int> GetWeights(ClockSettings settings)
@@ -76,47 +76,47 @@ namespace Hurace.Simulator
 
         private void Invoke()
         {
-            timer.Interval = random.Next(settings.MinInterval, settings.MaxInterval);
+            this.timer.Interval = this.random.Next(this.settings.MinInterval, this.settings.MaxInterval);
 
             DateTime wrongDeltaTime;
 
             lock (this)
             {
-                sensorId++;
-                if (sensorId >= settings.SensorAmount)
+                this.sensorId++;
+                if (this.sensorId >= this.settings.SensorAmount)
                 {
-                    sensorId = 0;
+                    this.sensorId = 0;
                 }
 
-                wrongDeltaTime = time.AddSeconds(settings.MaxRealInterval * 2);
-                time = time.AddMilliseconds(random.Next(settings.MinRealInterval, settings.MaxRealInterval));
+                wrongDeltaTime = this.time.AddSeconds(this.settings.MaxRealInterval * 2);
+                this.time = this.time.AddMilliseconds(this.random.Next(this.settings.MinRealInterval, this.settings.MaxRealInterval));
             }
 
-            IDictionary<InvokeType, int> weights = GetWeights(settings);
+            IDictionary<InvokeType, int> weights = this.GetWeights(this.settings);
             int totalWeight = weights.Select(w => w.Value).Sum();
-            int weight = random.Next(0, totalWeight);
+            int weight = this.random.Next(0, totalWeight);
 
-            InvokeType invokeType = GetInvokeType(weights, weight);
-            switch(invokeType)
+            InvokeType invokeType = this.GetInvokeType(weights, weight);
+            switch (invokeType)
             {
                 case InvokeType.Success:
-                    TimingTriggered?.Invoke(sensorId, time);
+                    this.TimingTriggered?.Invoke(this.sensorId, this.time);
                     break;
 
                 case InvokeType.DoNotTrigger:
                     break;
 
                 case InvokeType.WrongSensor:
-                    TimingTriggered?.Invoke(-1, time);
+                    this.TimingTriggered?.Invoke(-1, this.time);
                     break;
 
                 case InvokeType.WrongDeltaTime:
-                    TimingTriggered?.Invoke(sensorId, wrongDeltaTime);
+                    this.TimingTriggered?.Invoke(this.sensorId, wrongDeltaTime);
                     break;
 
                 case InvokeType.MultipleSensors:
-                    TimingTriggered?.Invoke(sensorId, time);
-                    TimingTriggered?.Invoke(sensorId, time);
+                    this.TimingTriggered?.Invoke(this.sensorId, this.time);
+                    this.TimingTriggered?.Invoke(this.sensorId, this.time);
                     break;
 
                 default: throw new CaseNotImplementedException<InvokeType>(invokeType);
@@ -125,9 +125,9 @@ namespace Hurace.Simulator
 
         public void Stop()
         {
-            timer?.Stop();
-            timer?.Dispose();
-            timer = null;
+            this.timer?.Stop();
+            this.timer?.Dispose();
+            this.timer = null;
         }
     }
 }

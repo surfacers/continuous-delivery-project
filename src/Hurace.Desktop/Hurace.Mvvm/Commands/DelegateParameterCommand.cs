@@ -23,9 +23,9 @@ namespace Hurace.Mvvm.Commands
         }
 
         public bool CanExecute(object parameter)
-         => canExecute == null || canExecute((T)parameter);
+         => this.canExecute == null || this.canExecute((T)parameter);
 
         public void Execute(object parameter)
-            => execute((T)parameter);
+            => this.execute((T)parameter);
     }
 }

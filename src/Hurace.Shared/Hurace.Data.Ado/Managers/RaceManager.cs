@@ -17,16 +17,16 @@ namespace Hurace.Data.Ado.Managers
 
         public Task<IEnumerable<Race>> GetByRaceStateAsync(RaceState raceState)
         {
-            var query = Query()
+            var query = this.Query()
                 .Where(nameof(Race.RaceState), raceState);
 
-            return QueryAsync(query);
+            return this.QueryAsync(query);
         }
 
         public async Task<bool> UpdateRaceState(int id, RaceState raceState)
         {
-            var query = Query(id).AsUpdate(nameof(Race.RaceState), raceState);
-            return (await ExecuteAsync(query)) == 1;
+            var query = this.Query(id).AsUpdate(nameof(Race.RaceState), raceState);
+            return (await this.ExecuteAsync(query)) == 1;
         }
     }
 }

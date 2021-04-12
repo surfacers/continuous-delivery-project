@@ -9,7 +9,7 @@ namespace Hurace.RaceControl.Views.Simulator
     {
         public SimulatorView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

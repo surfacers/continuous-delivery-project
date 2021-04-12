@@ -9,7 +9,7 @@ namespace Hurace.Mvvm.Views.Controls
     {
         public CommandControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

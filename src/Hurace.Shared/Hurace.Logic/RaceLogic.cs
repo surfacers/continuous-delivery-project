@@ -32,19 +32,19 @@ namespace Hurace.Core.Logic
 
         public async Task<IEnumerable<Race>> GetAllAsync()
         {
-            var races = await raceManager.GetAllAsync();
+            var races = await this.raceManager.GetAllAsync();
             return races.OrderByDescending(r => r.RaceDate).ThenBy(r => r.RaceState);
         }
 
         public async Task<IEnumerable<Race>> GetByRaceStateAsync(RaceState raceState)
         {
-            var races = await raceManager.GetByRaceStateAsync(raceState);
+            var races = await this.raceManager.GetByRaceStateAsync(raceState);
             return races.OrderBy(r => r.RaceDate);
         }
 
         public async Task<Race> GetByIdAsync(int id)
         {
-            return await raceManager.GetByIdAsync(id);
+            return await this.raceManager.GetByIdAsync(id);
         }
 
         public bool CanRemove(Race race)
@@ -64,8 +64,8 @@ namespace Hurace.Core.Logic
             {
                 using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
                 {
-                    await startListManager.RemoveAsync(race.Id);
-                    await raceManager.RemoveAsync(race.Id);
+                    await this.startListManager.RemoveAsync(race.Id);
+                    await this.raceManager.RemoveAsync(race.Id);
 
                     transaction.Complete();
                     return true;
@@ -85,11 +85,11 @@ namespace Hurace.Core.Logic
 
             if (race.Id == 0)
             {
-                await raceManager.CreateAsync(race);
+                await this.raceManager.CreateAsync(race);
             }
             else
             {
-                bool updateSuccess = await raceManager.UpdateAsync(race);
+                bool updateSuccess = await this.raceManager.UpdateAsync(race);
                 if (!updateSuccess)
                 {
                     return new SaveResult.Error(ErrorCode.UpdateError);
@@ -97,20 +97,19 @@ namespace Hurace.Core.Logic
             }
 
             return new SaveResult.Success(race.Id);
-
         }
 
         public async Task<SaveResult> SaveAsync(Race race, int runNumber, IEnumerable<StartList> startList)
         {
             using (var transaction = new TransactionScope(TransactionScopeAsyncFlowOption.Enabled))
             {
-                var result = await SaveAsync(race);
+                var result = await this.SaveAsync(race);
                 if (result.IsError)
                 {
                     return result;
                 }
 
-                bool successful = await startListManager.SaveAsync(race.Id, runNumber, startList);
+                bool successful = await this.startListManager.SaveAsync(race.Id, runNumber, startList);
                 if (!successful)
                 {
                     return new SaveResult.Error(ErrorCode.SaveError);
@@ -124,7 +123,7 @@ namespace Hurace.Core.Logic
 
         public async Task<bool> StartAsync(int raceId)
         {
-            return await raceManager.UpdateRaceState(raceId, RaceState.Running);
+            return await this.raceManager.UpdateRaceState(raceId, RaceState.Running);
         }
     }
 }

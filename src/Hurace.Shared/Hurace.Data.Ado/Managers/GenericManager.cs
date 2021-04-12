@@ -29,55 +29,55 @@ namespace Hurace.Data.Ado.Managers
 
         public async Task<IEnumerable<T>> QueryAsync(Query query)
         {
-            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(compiler);
-            return await ado.QueryAsync(sql, mapper.Map<T>, queryParams.ToArray());
+            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(this.compiler);
+            return await this.ado.QueryAsync(sql, this.mapper.Map<T>, queryParams.ToArray());
         }
 
         public async Task<T> QueryFirstAsync(Query query)
         {
-            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(compiler);
-            return await ado.QueryFirstAsync(sql, mapper.Map<T>, queryParams.ToArray());
+            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(this.compiler);
+            return await this.ado.QueryFirstAsync(sql, this.mapper.Map<T>, queryParams.ToArray());
         }
 
         public async Task<int> ExecuteAsync(Query query)
         {
-            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(compiler);
-            return await ado.ExecuteAsync(sql, queryParams.ToArray());
+            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(this.compiler);
+            return await this.ado.ExecuteAsync(sql, queryParams.ToArray());
         }
 
-        public async Task<R> ExecuteAsync<R>(Query query, DbAction<R> action)
+        public async Task<TRow> ExecuteAsync<TRow>(Query query, DbAction<TRow> action)
         {
-            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(compiler);
-            return await ado.ExecuteAsync<R>(sql, action, queryParams.ToArray());
+            (string sql, IEnumerable<QueryParameter> queryParams) = query.AsSqlQuery(this.compiler);
+            return await this.ado.ExecuteAsync<TRow>(sql, action, queryParams.ToArray());
         }
 
         public async Task CreateAsync(T entity)
         {
-            Query query = Query().AsEntityInsert(entity);
+            Query query = this.Query().AsEntityInsert(entity);
             DbAction<int> fetchId = async command => Convert.ToInt32(await command.ExecuteScalarAsync());
 
-            entity.Id = await ExecuteAsync(query, fetchId);
+            entity.Id = await this.ExecuteAsync(query, fetchId);
         }
 
-        public async Task<bool> RemoveAsync(int id)
+        public virtual async Task<bool> RemoveAsync(int id)
         {
             Query query = typeof(IRemovable).IsAssignableFrom(typeof(T))
-                ? Query(id).AsUpdate(nameof(IRemovable.IsRemoved), true) // Only set flag
-                : Query(id).AsDelete();
+                ? this.Query(id).AsUpdate(nameof(IRemovable.IsRemoved), true) // Only set flag
+                : this.Query(id).AsDelete();
 
-            return (await ExecuteAsync(query)) == 1;
+            return (await this.ExecuteAsync(query)) == 1;
         }
 
         public async Task<bool> UpdateAsync(T entity)
         {
-            Query query = Query(entity.Id).AsEntityUpdate(entity);
-            return (await ExecuteAsync(query)) == 1;
+            Query query = this.Query(entity.Id).AsEntityUpdate(entity);
+            return (await this.ExecuteAsync(query)) == 1;
         }
 
-        public Task<IEnumerable<T>> GetAllAsync() => QueryAsync(Query());
-        public Task<T> GetByIdAsync(int id) => QueryFirstAsync(Query(id));
+        public Task<IEnumerable<T>> GetAllAsync() => this.QueryAsync(this.Query());
+        public Task<T> GetByIdAsync(int id) => this.QueryFirstAsync(this.Query(id));
 
         public Query Query() => new Query(typeof(T).Name);
-        public Query Query(int id) => Query().Where(nameof(IEntity.Id), id);
+        public Query Query(int id) => this.Query().Where(nameof(IEntity.Id), id);
     }
 }

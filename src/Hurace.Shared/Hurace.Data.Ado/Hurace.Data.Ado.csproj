@@ -9,6 +9,10 @@
     <PackageReference Include="Microsoft.Data.SqlClient" Version="1.0.19269.1" />
     <PackageReference Include="MySqlConnector" Version="0.60.2" />
     <PackageReference Include="SqlKata" Version="1.1.7" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>

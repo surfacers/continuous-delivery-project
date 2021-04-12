@@ -34,7 +34,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<RaceDataDto>>> GetRaceData(int raceId, int runNumber)
         {
             IEnumerable<RaceData> raceData = await this.raceDataLogic.GetByRaceIdAsync(raceId, runNumber);
-            return Ok(this.mapper.Map<IEnumerable<RaceDataDto>>(raceData));
+            return this.Ok(this.mapper.Map<IEnumerable<RaceDataDto>>(raceData));
         }
     }
 }

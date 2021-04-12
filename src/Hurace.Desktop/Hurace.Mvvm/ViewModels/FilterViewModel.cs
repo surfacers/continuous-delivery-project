@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Hurace.Core.Extensions;
-using Hurace.Mvvm;
 
 namespace Hurace.Mvvm.ViewModels
 {
@@ -23,24 +22,24 @@ namespace Hurace.Mvvm.ViewModels
         private string filter;
         public string Filter
         {
-            get => filter;
+            get => this.filter;
             set
             {
-                Set(ref filter, value);
-                FilterList();
+                this.Set(ref this.filter, value);
+                this.FilterList();
             }
         }
 
         private T selected;
         public T Selected
         {
-            get => selected;
+            get => this.selected;
             set
             {
-                Set(ref selected, value);
-                if (selected != null)
+                this.Set(ref this.selected, value);
+                if (this.selected != null)
                 {
-                    OnSelectionChanged(selected);
+                    this.OnSelectionChanged(this.selected);
                 }
             }
         }
@@ -53,23 +52,23 @@ namespace Hurace.Mvvm.ViewModels
 
         public void FilterList()
         {
-            string safeFilter = filter?.ToLower() ?? string.Empty;
+            string safeFilter = this.filter?.ToLower() ?? string.Empty;
 
-            // Note: cannot clear Filtered list and readd it because in some cases
+            // Note: cannot clear Filtered list and read it because in some cases
             // the selected item gets then set to null
-            foreach (var item in Data)
+            foreach (var item in this.Data)
             {
-                bool matchesFilter = filterPredicate(item).ToLower().Contains(safeFilter);
-                bool alreadyInFiltered = Filtered.Contains(item);
+                bool matchesFilter = this.filterPredicate(item).ToLower().Contains(safeFilter);
+                bool alreadyInFiltered = this.Filtered.Contains(item);
 
                 switch ((matchesFilter, alreadyInFiltered))
                 {
                     case (matchesFilter: true, alreadyInFiltered: false):
-                        Filtered.Add(item);
+                        this.Filtered.Add(item);
                         break;
 
                     case (matchesFilter: false, alreadyInFiltered: true):
-                        Filtered.Remove(item);
+                        this.Filtered.Remove(item);
                         break;
 
                     case (matchesFilter: true, alreadyInFiltered: true): 
@@ -82,34 +81,34 @@ namespace Hurace.Mvvm.ViewModels
 
         public void SetItems(IEnumerable<T> items)
         {
-            Data.SetItems(items);
+            this.Data.SetItems(items);
 
-            Filtered.Clear();            
-            Filter = null;
-            FilterList();
+            this.Filtered.Clear();            
+            this.Filter = null;
+            this.FilterList();
         }
 
         public void Add(T item)
         {
-            Data.Add(item);
-            FilterList();
+            this.Data.Add(item);
+            this.FilterList();
         }
 
         public void Remove(T item)
         {
-            Data.Remove(item);
-            Filtered.Remove(item);
+            this.Data.Remove(item);
+            this.Filtered.Remove(item);
         }
 
         public void RemoveSelected()
         {
-            Remove(Selected);
-            Selected = default(T);
+            this.Remove(this.Selected);
+            this.Selected = default(T);
         }
 
         private async void OnSelectionChanged(T item)
         {
-            await selectionChanged?.Invoke(item);
+            await this.selectionChanged?.Invoke(item);
         }
     }
 }

@@ -18,11 +18,11 @@ namespace Hurace.RaceControl.ViewModels
             IComponentViewModel viewModel,
             IRaceViewModel parent)
         {
-            View = view ?? throw new ArgumentNullException();
-            Parent = parent ?? throw new ArgumentNullException();
-            ViewModel = viewModel ?? throw new ArgumentNullException();
+            this.View = view ?? throw new ArgumentNullException();
+            this.Parent = parent ?? throw new ArgumentNullException();
+            this.ViewModel = viewModel ?? throw new ArgumentNullException();
 
-            View.DataContext = viewModel;
+            this.View.DataContext = viewModel;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Hurace.RaceControl.Views.Race
     {
         public RaceView()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

@@ -10,8 +10,8 @@ namespace Hurace.RaceControl
     {
         public MonitorWindow(MonitorViewModel monitorViewModel)
         {
-            InitializeComponent();
-            DataContext = monitorViewModel;
+            this.InitializeComponent();
+            this.DataContext = monitorViewModel;
         }
     }
 }

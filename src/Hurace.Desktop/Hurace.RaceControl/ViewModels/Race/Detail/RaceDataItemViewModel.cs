@@ -8,14 +8,14 @@ namespace Hurace.RaceControl.ViewModels.Race.Detail
     {
         public RaceData RaceData { get; private set; }
 
-        public byte SensorId => RaceData.SensorId;
-        public DateTime TimeStamp => RaceData.TimeStamp;
+        public byte SensorId => this.RaceData.SensorId;
+        public DateTime TimeStamp => this.RaceData.TimeStamp;
         public DateTime TotalTime { get; }
 
         public RaceDataItemViewModel(RaceData raceData, DateTime? startTime)
         {
-            RaceData = raceData;
-            TotalTime = startTime == null
+            this.RaceData = raceData;
+            this.TotalTime = startTime == null
                 ? new DateTime(0)
                 : new DateTime((raceData.TimeStamp - (DateTime)startTime).Ticks);
         }

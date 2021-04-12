@@ -21,53 +21,57 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl
         private bool showLiveView;
         public bool ShowLiveView
         {
-            get => showLiveView;
-            set => Set(ref showLiveView, value);
+            get => this.showLiveView;
+            set => this.Set(ref this.showLiveView, value);
         }
 
         public CommandViewModel ShowLiveViewCommand { get; }
 
         public DisplayControlViewModel()
         {
-            ShowStatsRun1Command = new CommandViewModel(
-                "Open run 1", "Show for run 1",
-                () => OpenStats(runNumber: 1),
+            this.ShowStatsRun1Command = new CommandViewModel(
+                "Open run 1", 
+                "Show for run 1",
+                () => this.OpenStats(runNumber: 1),
                 withStyle: ButtonStyle.Flat);
 
-            ShowStatsRun2Command = new CommandViewModel(
-                "Open run 2", "Show for run 2",
-                () => OpenStats(runNumber: 2),
+            this.ShowStatsRun2Command = new CommandViewModel(
+                "Open run 2", 
+                "Show for run 2",
+                () => this.OpenStats(runNumber: 2),
                 withStyle: ButtonStyle.Flat);
 
-            ShowLiveViewCommand = new CommandViewModel(
-                "Open live view", "open live view",
-                () => OpenLiveView(),
+            this.ShowLiveViewCommand = new CommandViewModel(
+                "Open live view", 
+                "open live view",
+                () => this.OpenLiveView(),
                 withStyle: ButtonStyle.Flat);
         }
 
         public override Task OnInitAsync()
         {
-            var currentRace = Parent.Races.Selected;
+            var currentRace = this.Parent.Races.Selected;
 
-            ShowStatsRun1Command.Content = currentRace.Race.HasSecondRun() ? "Open run 1" : "Open run";
-            ShowStatsRun2Command.ShowCommand = () => currentRace.Race.HasSecondRun();
-            ShowLiveView = currentRace.Race.RaceState == Enums.RaceState.Running;
+            this.ShowStatsRun1Command.Content = currentRace.Race.HasSecondRun() ? "Open run 1" : "Open run";
+            this.ShowStatsRun2Command.ShowCommand = () => currentRace.Race.HasSecondRun();
+            this.ShowLiveView = currentRace.Race.RaceState == Enums.RaceState.Running;
 
             return Task.CompletedTask;
         }
+
         private async Task OpenLiveView()
         {
-            await OpenNewWindow(new LiveView(), new LiveViewModel());
+            await this.OpenNewWindow(new LiveView(), new LiveViewModel());
         }
 
         private async Task OpenStats(int runNumber)
         {
-            await OpenNewWindow(new StatsView(), new StatsViewModel(Parent, runNumber));
+            await this.OpenNewWindow(new StatsView(), new StatsViewModel(this.Parent, runNumber));
         }
 
         private async Task OpenNewWindow(Control view, IComponentViewModel viewModel)
         {
-            var monitorViewModel = new MonitorViewModel(view, viewModel, Parent);
+            var monitorViewModel = new MonitorViewModel(view, viewModel, this.Parent);
             await viewModel.OnInitAsync();
             
             var window = new MonitorWindow(monitorViewModel);

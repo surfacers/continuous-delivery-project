@@ -32,7 +32,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<RaceDto>>> GetAll()
         {
             IEnumerable<Race> races = await this.raceLogic.GetAllAsync();
-            return Ok(this.mapper.Map<IEnumerable<RaceDto>>(races));
+            return this.Ok(this.mapper.Map<IEnumerable<RaceDto>>(races));
         }
 
         [HttpGet]
@@ -42,7 +42,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<IEnumerable<RaceDto>>> GetAll(RaceState state)
         {
             IEnumerable<Race> races = await this.raceLogic.GetByRaceStateAsync(state);
-            return Ok(this.mapper.Map<IEnumerable<RaceDto>>(races));
+            return this.Ok(this.mapper.Map<IEnumerable<RaceDto>>(races));
         }
 
         [HttpGet]
@@ -52,7 +52,7 @@ namespace Hurace.Api.Controllers
         public async Task<ActionResult<RaceDto>> GetById(int id)
         {
             Race race = await this.raceLogic.GetByIdAsync(id);
-            return Ok(this.mapper.Map<RaceDto>(race));
+            return this.Ok(this.mapper.Map<RaceDto>(race));
         }
 
         [HttpPost]
@@ -64,9 +64,9 @@ namespace Hurace.Api.Controllers
             var result = await this.raceLogic.SaveAsync(dbRace);
 
             return result.Match(
-                success => StatusCode(200, success.Id),
-                validationError => StatusCode(400, validationError.Errors),
-                error => StatusCode(500, error.ErrorCode));
+                success => this.StatusCode(200, success.Id),
+                validationError => this.StatusCode(400, validationError.Errors),
+                error => this.StatusCode(500, error.ErrorCode));
         }
 
         [HttpDelete]
@@ -76,8 +76,8 @@ namespace Hurace.Api.Controllers
         {
             Race dbRace = this.mapper.Map<Race>(race);
             return (await this.raceLogic.RemoveAsync(dbRace)) 
-                ? StatusCode(200) 
-                : StatusCode(400);
+                ? this.StatusCode(200) 
+                : this.StatusCode(400);
         }
     }
 }

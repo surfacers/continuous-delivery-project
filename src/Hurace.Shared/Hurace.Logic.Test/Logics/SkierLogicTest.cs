@@ -19,7 +19,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetAllAsync_ValidTest1(Gender gender, bool isActive, int amount)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var skiers = await skierLogic.GetAllAsync(gender, isActive);
@@ -34,7 +34,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetAllAsync_ValidTest2(bool isActive, int amount)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var skiers = await skierLogic.GetAllAsync(isActive);
@@ -48,7 +48,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task GetById_ValidTest(int id)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var skier = await skierLogic.GetByIdAsync(id);
@@ -58,14 +58,13 @@ namespace Hurace.Logic.Test.Logics
             Assert.Equal(id, skier.Id);
         }
 
-
         [Theory]
         [InlineData(-1)]
         [InlineData(0)]
         public async Task GetById_InvalidTest(int id)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var skier = await skierLogic.GetByIdAsync(id);
@@ -79,7 +78,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task Remove_ValidTest(int id)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var result = await skierLogic.RemoveAsync(id);
@@ -96,7 +95,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task Remove_InvalidTest(int id)
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
 
             // Act
             var result = await skierLogic.RemoveAsync(id);
@@ -109,7 +108,7 @@ namespace Hurace.Logic.Test.Logics
         public async Task Save_ValidTest()
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
             var skier = new Skier
             {
                 FirstName = "Hansi",
@@ -128,12 +127,11 @@ namespace Hurace.Logic.Test.Logics
             Assert.True(result.IsSuccess);
         }
 
-
         [Fact]
         public async Task Save_InvalidTest()
         {
             // Arrange
-            var skierLogic = GetSkierLogic();
+            var skierLogic = this.GetSkierLogic();
             var skier = new Skier();
 
             // Act
@@ -142,7 +140,6 @@ namespace Hurace.Logic.Test.Logics
             // Assert
             Assert.True(result.IsError);
         }
-
 
         private ISkierManager GetSkierManager(Data data)
         {
@@ -174,7 +171,7 @@ namespace Hurace.Logic.Test.Logics
         private ISkierLogic GetSkierLogic()
         {
             var data = new Data();
-            return new SkierLogic(GetSkierManager(data), new Core.Validators.SkierValidator());
+            return new SkierLogic(this.GetSkierManager(data), new Core.Validators.SkierValidator());
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Hurace.RaceControl.Services.Impl
         
         public void ShowMessage(string message)
         {
-            MessageQueue.Enqueue(message);
+            this.MessageQueue.Enqueue(message);
         }
     }
 }

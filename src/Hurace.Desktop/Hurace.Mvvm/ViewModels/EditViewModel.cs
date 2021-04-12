@@ -20,13 +20,13 @@ namespace Hurace.Mvvm.ViewModels
 
         public TModel Original { get; set; }
 
-        public bool HasErrors => errors.Any();
+        public bool HasErrors => this.errors.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         public IEnumerable GetErrors(string propertyName)
         {
-            return errors.TryGetValue(propertyName, out string value)
+            return this.errors.TryGetValue(propertyName, out string value)
                 ? new[] { value }
                 : null;
         }
@@ -40,14 +40,14 @@ namespace Hurace.Mvvm.ViewModels
 
         public void Validate([CallerMemberName] string propertyName = "")
         {
-            var model = mapper.Map<TModel>(this);
-            ValidationResult result = validator.Validate(model);
+            var model = this.mapper.Map<TModel>(this);
+            ValidationResult result = this.validator.Validate(model);
 
-            errors = result.Errors
+            this.errors = result.Errors
                 .GroupBy(m => m.PropertyName)
                 .ToDictionary(m => m.Key, m => m.First().ErrorCode);
 
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            this.ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
         public override void Set<T>(ref T field, T value, [CallerMemberName] string propertyName = "")
@@ -55,8 +55,8 @@ namespace Hurace.Mvvm.ViewModels
             if (!EqualityComparer<T>.Default.Equals(value, field))
             {
                 field = value;
-                Raise(propertyName);
-                Validate(propertyName);
+                this.Raise(propertyName);
+                this.Validate(propertyName);
             }
         }
     }

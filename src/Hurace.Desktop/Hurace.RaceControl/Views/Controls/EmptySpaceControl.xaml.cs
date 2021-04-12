@@ -22,7 +22,7 @@ namespace Hurace.RaceControl.Views.Controls
     {
         public EmptySpaceControl()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

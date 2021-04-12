@@ -9,12 +9,12 @@ namespace Hurace.RaceControl.ViewModels.DisplayControl.ControlPanel
     {
         public StatsItemViewModel(RaceStatisticEntry raceStatisticEntry, Models.Skier skier)
         {
-            CurrentPosition = raceStatisticEntry.CurrentPosition;
-            DeltaPosition = raceStatisticEntry.DeltaPosition;
-            SkierFullname = skier.FullName();
-            SkierCountryCode = skier.CountryCode;
-            Time = raceStatisticEntry.Time;
-            DeltaTimeLeadership = raceStatisticEntry.DeltaTimeLeadership;
+            this.CurrentPosition = raceStatisticEntry.CurrentPosition;
+            this.DeltaPosition = raceStatisticEntry.DeltaPosition;
+            this.SkierFullname = skier.FullName();
+            this.SkierCountryCode = skier.CountryCode;
+            this.Time = raceStatisticEntry.Time;
+            this.DeltaTimeLeadership = raceStatisticEntry.DeltaTimeLeadership;
         }
 
         public int CurrentPosition { get; set; }
